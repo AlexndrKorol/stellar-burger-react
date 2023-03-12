@@ -1,0 +1,16 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  max-height: 756px;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+}
+
+.container {
+  overflow-y: scroll;
+}
+
