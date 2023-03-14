@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   max-width: 600px;
-  max-height: 756px;
 }
 
 .menu {
@@ -12,5 +11,5 @@
 
 .container {
   overflow-y: scroll;
+  /* margin-bottom: 40px; */
 }
-

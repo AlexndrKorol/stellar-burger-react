@@ -1,0 +1,29 @@
+.container {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.container--opened {
+  display: flex;
+}
+
+.modal_info {
+  display: flex;
+
+}
+
+.modal_content {
+  margin: auto;
+  border-radius: 10px;
+  outline: 1px solid white;
+  z-index: 1;
+  
+  max-width: 720px;
+  max-height: 718px;
+  height: 100%;
+  background-color: black;
+}
