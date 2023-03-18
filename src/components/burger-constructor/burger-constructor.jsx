@@ -1,14 +1,24 @@
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from './burger-constructor.module.css'
+import React from 'react';
+import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from '../order-details/order-details';
+import styles from './burger-constructor.module.css';
 import cn from 'classnames';
+
 
 
 export const BurgerConstructor = ({constructorIngredients}) => {
   const buns = constructorIngredients.filter(data => data.type === 'bun')
   console.log(constructorIngredients)
   const nonBuns = constructorIngredients.filter(data => data.type !== 'bun')
+  
+  const [orderModal, setOrderModal] = React.useState(false);
+  const handleOrderClick = () => {
+    setOrderModal(true);
+  };
 
   return (
+
   <section className={styles.wrapper}>
 
     <div className='ml-6 mb-4'>
@@ -25,7 +35,7 @@ export const BurgerConstructor = ({constructorIngredients}) => {
             const lastBun = nonBuns.length - 1 === index;
             
             return (
-            <div className={cn(styles.element_item, lastBun ? '' : 'mb-4')}>
+            <div className={cn(styles.element_item, lastBun ? '' : 'mb-4')} key={data._id}>
               <DragIcon />
               <ConstructorElement
                 text={data.name}
@@ -48,19 +58,23 @@ export const BurgerConstructor = ({constructorIngredients}) => {
 
         <div className={cn(styles.order_sum)}>
           <div className={styles.order_container}>
-            <p className="text text_type_digits-medium mr-2">680</p>
+            <p className='text text_type_digits-medium mr-2'>680</p>
             <CurrencyIcon type="primary" />
           </div>
             <Button
               htmlType="button" 
               type="primary" 
               size="large"
+              onClick={handleOrderClick}
             >Оформить заказ
             </Button>
         </div>
-
-  </section>
-    
+        { orderModal && <Modal onClose ={handleOrderClick}>
+        <OrderDetails data={orderModal}/>
+      </Modal>}
+  </section>  
   )
 }
+
+export default BurgerConstructor;
 

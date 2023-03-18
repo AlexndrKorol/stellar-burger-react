@@ -10,6 +10,19 @@ import cn from 'classnames';
 
 export const modalRoot = document.querySelector('#modals')
 export const Modal = ({title, onClose, children}) => {
+  React.useEffect(() => {
+    function closeEsc(evt) {
+      if (evt.key === 'Escape') {
+        onClose();
+      }
+    }
+
+    document.addEventListener('keydown', closeEsc);
+    return () => {
+      document.removeEventListener('keydown', closeEsc);
+    };
+  }, [onClose]);
+
   return createPortal(
     <>
       <section className={styles.modal}>
@@ -18,7 +31,7 @@ export const Modal = ({title, onClose, children}) => {
             <CloseIcon onClick={onClose}/>
         </div>
         <div className={cn(styles.body)}>
-          {children}
+        {children}
         </div>
       </section>
       <ModalOverlay className={cn(styles.overlay)} onClick={onClose} />

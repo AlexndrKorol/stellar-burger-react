@@ -12,14 +12,18 @@ export const App = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     
-    getApiData()
-      .then(({data}) => {
-        setData(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const fetchData = async () => {
+      try {
+        const res = await getApiData();
+        setData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
+
 
   return (
     <div className={cn(styles.app)}> 

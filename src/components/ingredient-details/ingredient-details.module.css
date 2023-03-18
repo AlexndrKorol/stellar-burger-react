@@ -1,4 +1,4 @@
-.wrapper {
+.image_wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,6 +8,14 @@
   text-align: center;
 }
 
-.container {
+.details_container {
   display: flex;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.details_element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

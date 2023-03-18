@@ -10,11 +10,11 @@ export const AppHeader = () => {
       <nav className={cn(styles.nav)}>
 
         <div className={cn(styles.header__container, styles.link__container_left)}>
-        <a href="#" className={cn(styles.link, styles.link_active)}>
+        <a href="/" className={cn(styles.link, styles.link_active)}>
             <BurgerIcon type="primary" />
             <span className="text text_type_main-default ml-2">Конструктор</span>
           </a>
-          <a href="#" className={cn(styles.link, styles.link_active)}>
+          <a href="/" className={cn(styles.link, styles.link_active)}>
             <ListIcon type="secondary" />
             <span className="text text_type_main-default text_color_inactive ml-2">Лента заказов</span>
           </a>
@@ -25,7 +25,7 @@ export const AppHeader = () => {
           </div>
 
         <div className={cn(styles.header__container, styles.header__container_right)}>
-          <a href="#" className={cn(styles.link, styles.link_active)}>
+          <a href="/" className={cn(styles.link, styles.link_active)}>
             <ProfileIcon type="secondary" />
             <span className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</span>
           </a> 
