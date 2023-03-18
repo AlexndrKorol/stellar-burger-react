@@ -9,7 +9,7 @@ import styles from './category.module.css';
 import cn from 'classnames';
 
 export const Category = ({ title, id, ingredients }) => {
-    const [ingredientWindow, setIngredientWindow] = React.useState(false);
+    const [ingredientWindow, setIngredientWindow] = React.useState(null);
     const closeModalWindow = () => {setIngredientWindow(null)};
     return (
         <>
@@ -17,7 +17,7 @@ export const Category = ({ title, id, ingredients }) => {
           <div className={cn(styles.list, 'mb-10 pl-4 pr-4')}>
               {ingredients?.map(data => <BurgerIngredient key={data._id} {...data} count={1} onClick={() => setIngredientWindow(data)} />)}
           </div>
-          {ingredientWindow && <Modal title='Детали ингредиента'onClose={closeModalWindow}>
+          {ingredientWindow && <Modal title='Детали ингредиента' onClose={closeModalWindow}>
         <IngredientDetails data={ingredientWindow}/>
         </Modal>}
         </>
