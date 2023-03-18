@@ -1,10 +1,12 @@
-// import Modal from '../modal/modal'
-// const OrderDetails = () => {
-//   return (
-//       <>
-//         Order detTails
-//       </>
-//   )
-// }
+import styles from './order-details.module.css'
+import cn from 'classnames'
 
-// export default OrderDetails;
+const OrderDetails = () => {
+  return (
+      <>
+
+      </>
+  )
+}
+
+export default OrderDetails;

@@ -1,8 +1,6 @@
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor.module.css'
 import cn from 'classnames';
-// import OrderDetails from '../order-details/order-details'
-// import Modal from "../modal/modal";
 
 
 export const BurgerConstructor = ({constructorIngredients}) => {
@@ -12,11 +10,6 @@ export const BurgerConstructor = ({constructorIngredients}) => {
 
   return (
   <section className={cn(styles.wrapper, 'mt-25 mb-10')}>
-    {/* <Modal
-      title='Header'
-    >
-      <OrderDetails></OrderDetails>
-    </Modal> */}
 
     <div>
       {buns[0] && <ConstructorElement

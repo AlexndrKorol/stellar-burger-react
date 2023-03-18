@@ -1,37 +1,34 @@
-// import React from "react"
-// import ReactDOM from 'react-dom'
-// import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-// import styles from './modal.module.css'
-// import cn from 'classnames';
-// import ModalOverlay from "../modal-overlay/modal-overlay";
+import React from "react"
+import { createPortal } from 'react-dom'
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import PropTypes from 'prop-types'
+import styles from './modal.module.css'
+import cn from 'classnames';
 
-// const Modal = ({children, title}) => {
-//   const close = (e)=>{
-//     console.log(e.target.closest('.' + styles['container--opened']));
-//     const modal = e.target.closest('.' + styles['container--opened'])
-//     modal && modal.classList.remove(styles['container--opened'])
-//   }
 
-//   return ReactDOM.createPortal (
-//       <>
-//       <div className={cn(styles.container, styles['container--opened'])}>
-//         <ModalOverlay>
-//         </ModalOverlay>
 
-//         <div className={styles.modal_content}>
-//           <div className={styles.modal_info}>
-//             <p className="text text_type_main-medium">
-//               {title}
-//             </p>
-//             <CloseIcon type="primary" onClick={close}/>
-//           </div>
-//           {children}
-//         </div>
-        
-//       </div> 
-//       </>,
-//       document.getElementById('modal-root')
-//   )
-// }
+export const modalRoot = document.querySelector('#modals')
+export const Modal = ({title, onClose, children}) => {
+  return createPortal(
+    <>
+      <section className={styles.modal}>
+        <div className={cn(styles.header, 'ml-10 mt-10 mr-10')}>
+            <h2 className="text text_type_main-large">{title}</h2>
+            <CloseIcon onClick={onClose}/>
+            {children}
+          </div>
+      </section>
+      <ModalOverlay className={cn(styles.overlay)} onClick={onClose} />
+    </>, 
+    modalRoot
+  )
+}
 
-// export default Modal;
+modalRoot.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClose: PropTypes.func,
+  children: PropTypes.node.isRequired
+}
+
+export default modalRoot;

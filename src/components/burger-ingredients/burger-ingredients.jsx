@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Category } from '../category/category';
+import PropTypes from 'prop-types'
+import ingredientPropTypes from '../../utils/prop-types';
 import styles from './burger-ingredients.module.css'
 import cn from 'classnames';
 
 
 export const BurgerIngredients = ({ingredients}) => {
-  const [current, setCurrent] = useState('buns')
+  const [current, setCurrent] = useState('buns');
 
   const buns = ingredients.filter(item => item.type === 'bun');
   const main = ingredients.filter(item => item.type === 'main');
@@ -20,7 +22,7 @@ export const BurgerIngredients = ({ingredients}) => {
 
   return (
     <section className={styles.ingredients}>
-        <div className={cn(styles.menu, 'pb-10')}>
+        <div className={cn(styles.menu, 'mb-10')}>
         <Tab value="buns" active={current === 'buns'} onClick={handleClickTab}>
           Булки
         </Tab>
@@ -31,7 +33,7 @@ export const BurgerIngredients = ({ingredients}) => {
           Начинки
         </Tab>
       </div>
-      <div className={cn(styles.container, 'custom-scroll')}>
+      <section className={cn(styles.container, 'custom-scroll')}>
         <Category
             title="Булки"
             id="buns"
@@ -47,8 +49,14 @@ export const BurgerIngredients = ({ingredients}) => {
             id="sauce"
             ingredients={sauce}
         />
-      </div>
+      </section>
     </section>
   )
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
+}
+
+export default BurgerIngredients;
 
