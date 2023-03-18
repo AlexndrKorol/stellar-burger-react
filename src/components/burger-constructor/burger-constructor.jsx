@@ -9,9 +9,9 @@ export const BurgerConstructor = ({constructorIngredients}) => {
   const nonBuns = constructorIngredients.filter(data => data.type !== 'bun')
 
   return (
-  <section className={cn(styles.wrapper, 'mt-25 mb-10')}>
+  <section className={styles.wrapper}>
 
-    <div>
+    <div className='ml-6 mb-4'>
       {buns[0] && <ConstructorElement
         text={buns[0].name}
         price={buns[0].price} 
@@ -21,18 +21,23 @@ export const BurgerConstructor = ({constructorIngredients}) => {
     </div>
 
     <div className={cn(styles.container, 'custom-scroll')}> 
-        
-          {nonBuns.map(data => 
-            <div className={cn(styles.element_item,'mt-4 mb-4')}>
+          {nonBuns.map((data, index) => {
+            const lastBun = nonBuns.length - 1 === index;
+            
+            return (
+            <div className={cn(styles.element_item, lastBun ? '' : 'mb-4')}>
               <DragIcon />
               <ConstructorElement
                 text={data.name}
                 price={data.price} 
                 thumbnail={data.image} />
             </div>
+            )
+          }
+            
           )} 
     </div>
-    <div>
+    <div className='ml-6 mt-4'>
       {buns[0] && <ConstructorElement
         text={buns[0].name}
         price={buns[0].price} 

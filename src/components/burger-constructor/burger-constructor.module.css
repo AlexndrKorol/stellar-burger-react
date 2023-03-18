@@ -1,11 +1,13 @@
 .wrapper {
   max-width: 600px;
   /* max-height: 912px; */
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
   overflow-y: scroll;
-  height: 450px;
+  /* height: 450px; */
 }
 
 .order_sum {
