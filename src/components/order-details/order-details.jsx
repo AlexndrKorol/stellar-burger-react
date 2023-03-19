@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import doneImg from '../../images/done.svg';
 import styles from './order-details.module.css'
 import cn from 'classnames'
@@ -14,5 +15,8 @@ export const OrderDetails = () => {
   )
 }
 
+OrderDetails.propTypes = {
+  data: PropTypes.bool
+}
 
 export default OrderDetails;
