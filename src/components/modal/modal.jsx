@@ -9,7 +9,7 @@ import cn from 'classnames';
 
 
 export const modalRoot = document.querySelector('#modals')
-export const Modal = ({title, onClose, children}) => {
+export const Modal = ({ title, onClose, children }) => {
   React.useEffect(() => {
     function closeEsc(evt) {
       if (evt.key === 'Escape') {
@@ -27,15 +27,13 @@ export const Modal = ({title, onClose, children}) => {
     <>
       <section className={styles.modal}>
         <div className={cn(styles.header, 'ml-10 mt-10 mr-10')}>
-            <h2 className="text text_type_main-large">{title}</h2>
-            <CloseIcon onClick={onClose}/>
+          <h2 className="text text_type_main-large">{title}</h2>
+          <CloseIcon onClick={onClose} />
         </div>
-        <div className={cn(styles.body)}>
         {children}
-        </div>
       </section>
-      <ModalOverlay className={cn(styles.overlay)} onClick={onClose} />
-    </>, 
+      <ModalOverlay onClick={onClose} />
+    </>,
     modalRoot
   )
 }

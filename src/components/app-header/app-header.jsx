@@ -1,4 +1,4 @@
-import { Logo, BurgerIcon, ListIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../app-header/app-header.module.css'
 import cn from 'classnames'
 
@@ -6,11 +6,11 @@ export const AppHeader = () => {
   return (
 
     <header className={cn(styles.header, 'pt-4', 'pb-4')}>
-     
+
       <nav className={cn(styles.nav)}>
 
         <div className={cn(styles.header__container, styles.link__container_left)}>
-        <a href="/" className={cn(styles.link, styles.link_active)}>
+          <a href="/" className={cn(styles.link, styles.link_active)}>
             <BurgerIcon type="primary" />
             <span className="text text_type_main-default ml-2">Конструктор</span>
           </a>
@@ -19,17 +19,17 @@ export const AppHeader = () => {
             <span className="text text_type_main-default text_color_inactive ml-2">Лента заказов</span>
           </a>
         </div>
-          
-          <div className={cn(styles.header__container, styles.logo)}>
+
+        <div className={cn(styles.header__container, styles.logo)}>
           <Logo />
-          </div>
+        </div>
 
         <div className={cn(styles.header__container, styles.header__container_right)}>
           <a href="/" className={cn(styles.link, styles.link_active)}>
             <ProfileIcon type="secondary" />
             <span className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</span>
-          </a> 
-        </div> 
+          </a>
+        </div>
 
       </nav>
     </header>

@@ -7,7 +7,7 @@ import styles from './burger-ingredients.module.css'
 import cn from 'classnames';
 
 
-export const BurgerIngredients = ({ingredients}) => {
+export const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('buns');
 
   const buns = ingredients.filter(item => item.type === 'bun');
@@ -18,11 +18,11 @@ export const BurgerIngredients = ({ingredients}) => {
     setCurrent(tab);
     const title = document.getElementById(tab);
     if (title) title.scrollIntoView({ behavior: "smooth" })
-}
+  }
 
   return (
     <section className={styles.ingredients}>
-        <div className={cn(styles.menu, 'mb-10')}>
+      <div className={cn(styles.menu, 'mb-10')}>
         <Tab value="buns" active={current === 'buns'} onClick={handleClickTab}>
           Булки
         </Tab>
@@ -35,19 +35,19 @@ export const BurgerIngredients = ({ingredients}) => {
       </div>
       <section className={cn(styles.container, 'custom-scroll')}>
         <Category
-            title="Булки"
-            id="buns"
-            ingredients={buns}
+          title="Булки"
+          id="buns"
+          ingredients={buns}
         />
         <Category
-            title="Начинки"
-            id="main"
-            ingredients={main}
+          title="Начинки"
+          id="main"
+          ingredients={main}
         />
         <Category
-            title="Соусы"
-            id="sauce"
-            ingredients={sauce}
+          title="Соусы"
+          id="sauce"
+          ingredients={sauce}
         />
       </section>
     </section>
