@@ -6,6 +6,7 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor'
 import styles from './app.module.css';
 import cn from 'classnames'
 
+// 1.33 - далее диспач вместо useState ?
 
 export const App = () => {
   const [data, setData] = useState([]);

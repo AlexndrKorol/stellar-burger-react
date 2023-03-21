@@ -8,3 +8,5 @@ export const getApiData = async () => {
 
   return res.json();
 }
+
+export default getApiData;
