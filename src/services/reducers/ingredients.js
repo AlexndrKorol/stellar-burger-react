@@ -1,31 +1,35 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getApiData } from '../../utils/api';
-
-
-
-//создаем срез
+import {
+  createAsyncThunk,
+  createSlice
+} from "@reduxjs/toolkit";
+import * as api from '../../utils/api';
 
 const initialState = {
   data: [],
   isLoading: false,
   error: null
-}
+};
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
-  async (_, {dispatch , getState, rejectWithValue, fulfillWithValue}) => {
-    const response = await getApiData();
-      if(!response) {
-        return rejectWithValue({message: 'Ошибка на стороне сервера'});
-      }
-    return response.data;
+  async (_, {
+    dispatch,
+    getState,
+    rejectWithValue,
+    fulfillWithValue
+  }) => {
+    try {
+      const res = await api.getIngredients();
+      return fulfillWithValue(res.data);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   }
 )
 
-export const ingredientsSlice = createSlice({
+export const slice = createSlice({
   name: 'ingredients',
   initialState,
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {
@@ -35,6 +39,7 @@ export const ingredientsSlice = createSlice({
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.data = action.payload;
         state.isLoading = false;
+        state.error = null;
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.error = action.payload;
@@ -43,4 +48,4 @@ export const ingredientsSlice = createSlice({
   },
 })
 
-export default ingredientsSlice.reducer;
+export default slice.reducer;

@@ -4,16 +4,30 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import styles from './burger-constructor.module.css';
 import cn from 'classnames';
+import { useDrop } from 'react-dnd';
 
 
 
 export const BurgerConstructor = ({ constructorIngredients }) => {
-  const buns = constructorIngredients.filter(data => data.type === 'bun')
-  const nonBuns = constructorIngredients.filter(data => data.type !== 'bun')
+  const buns = React.useMemo(() => constructorIngredients.filter(data => data.type === 'bun'), [constructorIngredients]);
+  const nonBuns = React.useMemo(() => constructorIngredients.filter(data => data.type !== 'bun'), [constructorIngredients]);
+
   const [orderModal, setOrderModal] = React.useState(false);
   const handleOrderClick = () => {
     setOrderModal(true);
   };
+
+  const [dropState, drop] = useDrop(
+    () => ({
+      accept: 'ingredient',
+      // canDrop: () => game.canMoveKnight(x, y),
+      // drop: () => game.moveKnight(x, y),
+      // collect: (monitor) => ({
+      //   isOver: !!monitor.isOver(),
+      //   canDrop: !!monitor.canDrop(),
+      // }),
+    }),
+  )
 
   return (
 
@@ -28,7 +42,7 @@ export const BurgerConstructor = ({ constructorIngredients }) => {
           isLocked={true} />}
       </div>
 
-      <div className={cn(styles.container, 'custom-scroll')}>
+      <div ref={drop} className={cn(styles.container, 'custom-scroll')}>
         {nonBuns.map((data, index) => {
           const lastBun = nonBuns.length - 1 === index;
 
@@ -75,4 +89,3 @@ export const BurgerConstructor = ({ constructorIngredients }) => {
 }
 
 export default BurgerConstructor;
-

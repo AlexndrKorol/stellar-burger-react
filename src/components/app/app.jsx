@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react';
-import { getApiData } from '../../utils/api'
+import { useEffect } from 'react';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor'
 import styles from './app.module.css';
 import cn from 'classnames'
-
-// 1.33 - далее диспач вместо useState ?
+import { fetchIngredients } from '../../services/reducers/ingredients'
+import { useDispatch, useSelector } from 'react-redux';
 
 export const App = () => {
-  const [data, setData] = useState([]);
+  const data = useSelector((state) => state.ingredients.data);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        const res = await getApiData();
-        setData(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   return (
     <div className={cn(styles.app)}>

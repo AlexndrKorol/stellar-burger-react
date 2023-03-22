@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Category } from '../category/category';
 import PropTypes from 'prop-types'
@@ -10,9 +10,15 @@ import cn from 'classnames';
 export const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('buns');
 
-  const buns = ingredients.filter(item => item.type === 'bun');
-  const main = ingredients.filter(item => item.type === 'main');
-  const sauce = ingredients.filter(item => item.type === 'sauce');
+  const buns = React.useMemo(
+    () => ingredients.filter((item) => item.type === 'bun'),
+    [ingredients]);
+  const main = React.useMemo(
+    () => ingredients.filter((item) => item.type === 'main'),
+    [ingredients]);
+  const sauce = React.useMemo(
+    () => ingredients.filter((item) => item.type === 'sauce'),
+    [ingredients]);
 
   function handleClickTab(tab) {
     setCurrent(tab);
