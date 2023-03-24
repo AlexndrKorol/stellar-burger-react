@@ -2,75 +2,88 @@ import React from 'react';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
+import { useDrop } from 'react-dnd';
+import { burgerConstructorActions, burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import cn from 'classnames';
-import { useDrop } from 'react-dnd';
 
-
-
-export const BurgerConstructor = ({ constructorIngredients }) => {
-  const buns = React.useMemo(() => constructorIngredients.filter(data => data.type === 'bun'), [constructorIngredients]);
-  const nonBuns = React.useMemo(() => constructorIngredients.filter(data => data.type !== 'bun'), [constructorIngredients]);
+export const BurgerConstructor = () => {
+  const bun = useSelector(burgerConstructorSelectors.bun);
+  const ingredients = useSelector(burgerConstructorSelectors.ingredients);
+  const sum = useSelector(burgerConstructorSelectors.sum);
+  const isEmpty = !bun && ingredients.length === 0;
+  const dispatch = useDispatch();
 
   const [orderModal, setOrderModal] = React.useState(false);
   const handleOrderClick = () => {
     setOrderModal(true);
   };
-
   const [dropState, drop] = useDrop(
     () => ({
       accept: 'ingredient',
-      // canDrop: () => game.canMoveKnight(x, y),
-      // drop: () => game.moveKnight(x, y),
-      // collect: (monitor) => ({
-      //   isOver: !!monitor.isOver(),
-      //   canDrop: !!monitor.canDrop(),
-      // }),
+      drop: (item) => {
+        console.log('BurgerConstructor.drop', { item });
+
+        if (item.type === 'bun') {
+          dispatch(burgerConstructorActions.addBun(item))
+        } else {
+          dispatch(burgerConstructorActions.addIngredient(item));
+        }
+      },
     }),
   )
 
+  if (isEmpty) {
+    return <div ref={drop} className={cn(styles.empty, "text text_type_main-medium")}>Добавьте булку и ингредиенты</div>
+  }
+
+  const onDelete = (data) => {
+    dispatch(burgerConstructorActions.removeIngredient(data));
+  };
+
   return (
-
-    <section className={styles.wrapper}>
-
+    <section ref={drop} className={styles.wrapper}>
       <div className="ml-6 mb-4">
-        {buns[0] && <ConstructorElement
-          text={buns[0].name}
-          price={buns[0].price}
-          thumbnail={buns[0].image}
+        {!!bun && <ConstructorElement
+          text={bun.name}
+          price={bun.price}
+          thumbnail={bun.image}
           type='top'
           isLocked={true} />}
       </div>
 
-      <div ref={drop} className={cn(styles.container, 'custom-scroll')}>
-        {nonBuns.map((data, index) => {
-          const lastBun = nonBuns.length - 1 === index;
+      <div className={cn(styles.container, 'custom-scroll')}>
+        {ingredients.length === 0 && <div className={cn(styles.empty, "text text_type_main-medium")}>Добавьте ингредиенты</div>}
+        {ingredients.map((data, index) => {
+          const lastBun = ingredients.length - 1 === index;
 
           return (
-            <div className={cn(styles.element_item, lastBun ? '' : 'mb-4')} key={data._id}>
+            // Куратор сказала этот див вынести в отельный компонент для драга внутри списка? То есть внутри этого компонента будет и драг и дроп. То есть дроп идет на элемент, а не в контейнер. https://react-dnd.github.io/react-dnd/examples/sortable/simple
+            <div className={cn(styles.element_item, lastBun ? '' : 'mb-4')} key={data.uniqueId}>
               <DragIcon />
               <ConstructorElement
                 text={data.name}
                 price={data.price}
-                thumbnail={data.image} />
+                thumbnail={data.image}
+                handleClose={() => onDelete(data)} />
             </div>
           )
         }
-
         )}
       </div>
       <div className="ml-6 mt-4">
-        {buns[0] && <ConstructorElement
-          text={buns[0].name}
-          price={buns[0].price}
-          thumbnail={buns[0].image}
+        {!!bun && <ConstructorElement
+          text={bun.name}
+          price={bun.price}
+          thumbnail={bun.image}
           type="bottom"
           isLocked={true} />}
       </div>
 
       <div className={cn(styles.order_sum)}>
         <div className={styles.order_container}>
-          <p className="text text_type_digits-medium mr-2">680</p>
+          <p className="text text_type_digits-medium mr-2">{sum}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button

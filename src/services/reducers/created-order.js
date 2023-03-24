@@ -1,20 +1,50 @@
 import {
-  createSlice
+  createSlice,
+  createAsyncThunk,
 } from '@reduxjs/toolkit';
 
-const getInitialState = () => null;
+import * as api from '../../utils/api';
+
+const getInitialState = () => ({
+  data: null,
+  isLoading: false,
+  error: null,
+});
+
+export const createOrder = createAsyncThunk(
+  'createdOrder/fetch',
+  async (data, {
+    fulfillWithValue,
+    rejectWithValue,
+  }) => {
+    try {
+      const res = await api.createOrder(data);
+      return fulfillWithValue(res.data);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const slice = createSlice({
-  name: 'currentIngredient',
+  name: 'createdOrder',
   initialState: getInitialState(),
-  reducers: {
-    set: (state, action) => {
-      state = action.payload;
-    },
-    unset: (state) => {
-      state = getInitialState();
-    },
-  }
+  extraReducers: (builder) => {
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+  },
 });
 
 export default slice.reducer;

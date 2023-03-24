@@ -5,9 +5,12 @@ import PropTypes from 'prop-types'
 import ingredientPropTypes from '../../utils/prop-types';
 import styles from './burger-ingredients.module.css'
 import cn from 'classnames';
+import { useSelector } from "react-redux/es/exports";
 
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+  
+  const ingredients = useSelector((state) => state.ingredients.data);
   const [current, setCurrent] = useState('buns');
 
   const buns = React.useMemo(
@@ -29,13 +32,25 @@ export const BurgerIngredients = ({ ingredients }) => {
   return (
     <section className={styles.ingredients}>
       <div className={cn(styles.menu, 'mb-10')}>
-        <Tab value="buns" active={current === 'buns'} onClick={handleClickTab}>
+        <Tab 
+          value="buns" 
+          active={current === 'buns'} 
+          onClick={handleClickTab}
+          >
           Булки
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={handleClickTab}>
+        <Tab 
+          value="main" 
+          active={current === 'main'} 
+          onClick={handleClickTab}
+        >
           Соусы
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={handleClickTab}>
+        <Tab 
+          value="sauce" 
+          active={current === 'sauce'} 
+          onClick={handleClickTab}
+          >
           Начинки
         </Tab>
       </div>
