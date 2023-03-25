@@ -2,7 +2,7 @@ import { useDrag } from 'react-dnd';
 import { BurgerIngredient } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
-import styles from './CategoryItem.module.css';
+import styles from './category-item.module.css';
 
 export const CategoryItem = ({ data, setIngredientWindow }) => {
   const [dragState, drag] = useDrag({
@@ -22,7 +22,7 @@ export const CategoryItem = ({ data, setIngredientWindow }) => {
     <BurgerIngredient
       {...data}
       className={count === 0 ? styles.zero : ''} // Решение слледующей проблемы: в компоненте ингридиента из библиотеки при передаче нуля Count, 0 рендерится, как текст в JSX разметке. По всей видимости ошибка в самом компоненте в библиотеке. Потому присваиваем свой кастомный класс для скрытия счетчика в дефолтном состоянии
-      count={count || 1} // fix 0 counter render
+      count={count || -1} // fix 0 counter render
       onClick={() => setIngredientWindow(data)} />
   </div>
 }

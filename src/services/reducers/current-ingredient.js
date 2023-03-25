@@ -2,19 +2,20 @@ import {
   createSlice
 } from '@reduxjs/toolkit';
 
-const getInitialState = () => null;
+const getInitialState = () => ({ data: null });
 
 export const slice = createSlice({
   name: 'currentIngredient',
   initialState: getInitialState(),
   reducers: {
     set: (state, action) => {
-      state = action.payload;
+      state.data = action.payload;
     },
     unset: (state) => {
-      state = getInitialState();
+      state.data = null;
     },
   }
 });
 
+export const currentIngredientActions = slice.actions;
 export default slice.reducer;

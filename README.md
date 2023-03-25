@@ -1,12 +1,6 @@
-<h1 align="center">Привет! Я <a href="https://www.behance.net/Alexndr_Korol" target="_blank">Александр</a>
-<img src="https://github.com/blackcater/blackcater/raw/main/images/Hi.gif" height="32"/></h1>
-<h3 align="center">Я веб дизайнер, который решил изучать фронтенд</h3>
-<div id="header" align="center">
-  <img src="https://media.giphy.com/media/scZPhLqaVOM1qG4lT9/giphy.gif" width="200"/>
-</div>
-
 # Проект: Stellar Burgers
-Проект посвящен созданию приложения на основе React библиотеки
+Проект посвящен созданию приложения на основе React библиотеки.
+Проект находится в работею Скоро тут будет оформленный README и полноценный деплой.
 
 ## В работе применены технологии:
 

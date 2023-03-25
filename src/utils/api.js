@@ -1,4 +1,4 @@
-const BASE_URL = "https://norma.nomoreparties.space/api";
+const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 export const getIngredients = () => {
   return request('/ingredients');
@@ -11,8 +11,14 @@ export const createOrder = async (data) => {
   });
 };
 
-const request = async (url, init) => {
-  const res = await fetch(BASE_URL + url, init);
+const request = async (url, init = {}) => {
+  const res = await fetch(BASE_URL + url, {
+    ...init,
+    headers: {
+      ...init.headers,
+      'Content-Type': 'application/json',
+    },
+  });
   if (!res.ok) {
     throw new Error(`Ошибка получения данных в ${url}: ${res.status}`);
   }
