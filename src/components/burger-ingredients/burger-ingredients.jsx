@@ -6,6 +6,10 @@ import ingredientPropTypes from '../../utils/prop-types';
 import styles from './burger-ingredients.module.css';
 import cn from 'classnames';
 import { throttle } from 'throttle-debounce';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { Modal } from '../modal/modal';
+import { useSelector, useDispatch } from 'react-redux';
+import { currentIngredientActions } from '../../services/reducers/current-ingredient';
 
 export const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('buns');
@@ -18,6 +22,9 @@ export const BurgerIngredients = ({ ingredients }) => {
   const main = ingredients.filter((item) => item.type === 'main');
   const sauce = ingredients.filter((item) => item.type === 'sauce');
 
+  const ingredientWindow = useSelector((store) => store.currentIngredient.data)
+  const dispatch = useDispatch()
+
   function handleClickTab(tab) {
     setCurrent(tab);
     const title = document.getElementById(tab);
@@ -27,8 +34,8 @@ export const BurgerIngredients = ({ ingredients }) => {
   const getCoords = (ref) => ref.current.getBoundingClientRect();
 
   useEffect(() => {
-    containerRef.current.addEventListener(
-      'scroll',
+
+    const scrollHandler = 
       throttle(250, () => {
         const containerRect = getCoords(containerRef);
         const bunRect = getCoords(bunRef);
@@ -41,8 +48,15 @@ export const BurgerIngredients = ({ ingredients }) => {
         const index = deltas.indexOf(min);
         const tab = ['buns', 'main', 'sauce'][index];
         setCurrent(tab);
-      }),
+      })
+    
+    const unscrollElement = containerRef.current;
+    unscrollElement.addEventListener(
+      'scroll', scrollHandler
     );
+    return () => {
+       unscrollElement.removeEventListener('scroll', scrollHandler)
+    }
   }, []);
 
   return (
@@ -63,6 +77,11 @@ export const BurgerIngredients = ({ ingredients }) => {
         <Category title='Начинки' id='main' ingredients={main} headerRef={mainRef} />
         <Category title='Соусы' id='sauce' ingredients={sauce} headerRef={sauceRef} />
       </section>
+      {ingredientWindow && (
+        <Modal title='Детали ингредиента' onClose={() => dispatch(currentIngredientActions.unset())}>
+          <IngredientDetails data={ingredientWindow} />
+        </Modal>
+      )}
     </section>
   );
 };

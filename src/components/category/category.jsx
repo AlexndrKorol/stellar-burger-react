@@ -1,6 +1,6 @@
-import React from 'react';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
-import { Modal } from '../modal/modal';
+// import React from 'react';
+// import { IngredientDetails } from '../ingredient-details/ingredient-details';
+// import { Modal } from '../modal/modal';
 import PropTypes from 'prop-types';
 import ingredientPropTypes from '../../utils/prop-types';
 import styles from './category.module.css';
@@ -10,7 +10,7 @@ import { currentIngredientActions } from '../../services/reducers/current-ingred
 import { useDispatch, useSelector } from 'react-redux';
 
 export const Category = ({ title, id, ingredients, headerRef }) => {
-  const ingredientWindow = useSelector((store) => store.currentIngredient.data)
+  // const ingredientWindow = useSelector((store) => store.currentIngredient.data)
 
   const dispatch = useDispatch()
 
@@ -24,11 +24,6 @@ export const Category = ({ title, id, ingredients, headerRef }) => {
           <CategoryItem key={data._id} data={data} setIngredientWindow={() => dispatch(currentIngredientActions.set( data ))} />
         ))}
       </div>
-      {ingredientWindow && (
-        <Modal title='Детали ингредиента' onClose={() => dispatch(currentIngredientActions.unset())}>
-          <IngredientDetails data={ingredientWindow} />
-        </Modal>
-      )}
     </>
   );
 };
