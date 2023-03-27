@@ -3,9 +3,7 @@ import doneImg from '../../images/done.svg';
 import styles from './order-details.module.css';
 import cn from 'classnames';
 
-
 export const OrderDetails = ({ data }) => {
-  console.log({data});
   return (
     <section className={styles.order_details}>
       <h2 className={cn(styles.text, styles.digits, 'mb-8 text text_type_digits-large')}>{data.order.number}</h2>
@@ -20,11 +18,10 @@ export const OrderDetails = ({ data }) => {
 };
 
 OrderDetails.propTypes = {
-  data: PropTypes.shape ({
+  data: PropTypes.shape({
     name: PropTypes.string,
     order: PropTypes.object,
   })
 };
-
 
 export default OrderDetails;

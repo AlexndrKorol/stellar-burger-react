@@ -1,16 +1,12 @@
-// import React from 'react';
-// import { IngredientDetails } from '../ingredient-details/ingredient-details';
-// import { Modal } from '../modal/modal';
+import { CategoryItem } from '../category-item/category-item';
+import { currentIngredientActions } from '../../services/reducers/current-ingredient';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import ingredientPropTypes from '../../utils/prop-types';
 import styles from './category.module.css';
 import cn from 'classnames';
-import { CategoryItem } from '../category-item/category-item';
-import { currentIngredientActions } from '../../services/reducers/current-ingredient';
-import { useDispatch, useSelector } from 'react-redux';
 
 export const Category = ({ title, id, ingredients, headerRef }) => {
-  // const ingredientWindow = useSelector((store) => store.currentIngredient.data)
 
   const dispatch = useDispatch()
 

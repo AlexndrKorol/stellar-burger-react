@@ -2,6 +2,7 @@ import { useDrag } from 'react-dnd';
 import { BurgerIngredient } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
+import ingredientPropTypes from '../../utils/prop-types';
 import styles from './category-item.module.css';
 
 export const CategoryItem = ({ data, setIngredientWindow }) => {
@@ -26,3 +27,8 @@ export const CategoryItem = ({ data, setIngredientWindow }) => {
       onClick={() => setIngredientWindow(data)} />
   </div>
 }
+
+CategoryItem.propTypes = {
+  data: ingredientPropTypes.isRequired,
+};
+export default CategoryItem;

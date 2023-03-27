@@ -38,7 +38,6 @@ export const BurgerConstructor = () => {
   const [dropState, drop] = useDrop(() => ({
     accept: 'ingredient',
     drop: (item) => {
-      console.log('BurgerConstructor.drop', { item });
 
       if (item.type === 'bun') {
         dispatch(burgerConstructorActions.addBun(item));

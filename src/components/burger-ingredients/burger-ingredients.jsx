@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Category } from '../category/category';
-import PropTypes from 'prop-types';
-import ingredientPropTypes from '../../utils/prop-types';
-import styles from './burger-ingredients.module.css';
-import cn from 'classnames';
 import { throttle } from 'throttle-debounce';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { currentIngredientActions } from '../../services/reducers/current-ingredient';
+import PropTypes from 'prop-types';
+import ingredientPropTypes from '../../utils/prop-types';
+import styles from './burger-ingredients.module.css';
+import cn from 'classnames';
 
 export const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('buns');
@@ -35,7 +35,7 @@ export const BurgerIngredients = ({ ingredients }) => {
 
   useEffect(() => {
 
-    const scrollHandler = 
+    const scrollHandler =
       throttle(250, () => {
         const containerRect = getCoords(containerRef);
         const bunRect = getCoords(bunRef);
@@ -49,13 +49,13 @@ export const BurgerIngredients = ({ ingredients }) => {
         const tab = ['buns', 'main', 'sauce'][index];
         setCurrent(tab);
       })
-    
+
     const unscrollElement = containerRef.current;
     unscrollElement.addEventListener(
       'scroll', scrollHandler
     );
     return () => {
-       unscrollElement.removeEventListener('scroll', scrollHandler)
+      unscrollElement.removeEventListener('scroll', scrollHandler)
     }
   }, []);
 

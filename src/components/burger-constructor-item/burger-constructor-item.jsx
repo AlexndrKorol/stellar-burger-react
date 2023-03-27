@@ -1,14 +1,13 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
-import styles from './burger-constructor-item.module.css';
-import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { burgerConstructorActions } from '../../services/reducers/burger-constructor';
 import PropTypes from 'prop-types';
 import ingredientPropTypes from '../../utils/prop-types';
+import styles from './burger-constructor-item.module.css';
+import cn from 'classnames';
 
 export const BurgerConstructorItem = ({ data, lastBun, onDelete }) => {
-  console.log({data, lastBun, onDelete});
   const dispatch = useDispatch();
 
   const [dragState, drag] = useDrag({
