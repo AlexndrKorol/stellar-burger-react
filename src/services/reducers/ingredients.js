@@ -18,12 +18,8 @@ export const fetchIngredients = createAsyncThunk(
     rejectWithValue,
     fulfillWithValue
   }) => {
-    try {
       const res = await api.getIngredients();
       return fulfillWithValue(res.data);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
   }
 )
 

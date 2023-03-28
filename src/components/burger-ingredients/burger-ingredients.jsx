@@ -6,21 +6,21 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { currentIngredientActions } from '../../services/reducers/current-ingredient';
-import PropTypes from 'prop-types';
-import ingredientPropTypes from '../../utils/prop-types';
+import { fetchIngredients } from '../../services/reducers/ingredients'
 import styles from './burger-ingredients.module.css';
 import cn from 'classnames';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+  const data = useSelector((state) => state.ingredients.data);
   const [current, setCurrent] = useState('buns');
   const containerRef = useRef();
   const bunRef = useRef();
   const mainRef = useRef();
   const sauceRef = useRef();
 
-  const buns = ingredients.filter((item) => item.type === 'bun');
-  const main = ingredients.filter((item) => item.type === 'main');
-  const sauce = ingredients.filter((item) => item.type === 'sauce');
+  const buns = data.filter((item) => item.type === 'bun');
+  const main = data.filter((item) => item.type === 'main');
+  const sauce = data.filter((item) => item.type === 'sauce');
 
   const ingredientWindow = useSelector((store) => store.currentIngredient.data)
   const dispatch = useDispatch()
@@ -34,13 +34,17 @@ export const BurgerIngredients = ({ ingredients }) => {
   const getCoords = (ref) => ref.current.getBoundingClientRect();
 
   useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
 
     const scrollHandler =
       throttle(250, () => {
         const containerRect = getCoords(containerRef);
         const bunRect = getCoords(bunRef);
-        const mainRect = getCoords(mainRef);
         const sauceRect = getCoords(sauceRef);
+        const mainRect = getCoords(mainRef);
 
         const deltas = [bunRect, mainRect, sauceRect].map((rect) => Math.abs(containerRect.top - rect.top));
 
@@ -65,17 +69,17 @@ export const BurgerIngredients = ({ ingredients }) => {
         <Tab value='buns' active={current === 'buns'} onClick={handleClickTab}>
           Булки
         </Tab>
-        <Tab value='main' active={current === 'main'} onClick={handleClickTab}>
+        <Tab value='sauce' active={current === 'sauce'} onClick={handleClickTab}>
           Соусы
         </Tab>
-        <Tab value='sauce' active={current === 'sauce'} onClick={handleClickTab}>
+        <Tab value='main' active={current === 'main'} onClick={handleClickTab}>
           Начинки
         </Tab>
       </div>
       <section ref={containerRef} className={cn(styles.container, 'custom-scroll')}>
         <Category title='Булки' id='buns' ingredients={buns} headerRef={bunRef} />
-        <Category title='Начинки' id='main' ingredients={main} headerRef={mainRef} />
         <Category title='Соусы' id='sauce' ingredients={sauce} headerRef={sauceRef} />
+        <Category title='Начинки' id='main' ingredients={main} headerRef={mainRef} />
       </section>
       {ingredientWindow && (
         <Modal title='Детали ингредиента' onClose={() => dispatch(currentIngredientActions.unset())}>
@@ -84,10 +88,6 @@ export const BurgerIngredients = ({ ingredients }) => {
       )}
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 };
 
 export default BurgerIngredients;

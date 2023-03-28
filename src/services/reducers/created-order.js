@@ -10,14 +10,7 @@ const getInitialState = () => ({
 
 export const createOrder = createAsyncThunk(
   'createdOrder/fetch',
-  async (data, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      const res = await api.createOrder(data);
-      return fulfillWithValue(res);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  },
+  api.createOrder,
 );
 
 export const slice = createSlice({

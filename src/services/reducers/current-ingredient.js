@@ -14,6 +14,9 @@ export const slice = createSlice({
     unset: (state) => {
       state.data = null;
     },
+    reset: (state, action) => {
+      state.data = action.payload
+    }
   }
 });
 
