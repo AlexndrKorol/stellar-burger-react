@@ -4,7 +4,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import classNames from "classnames";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
