@@ -11,6 +11,48 @@ export const createOrder = async (data) => {
   });
 };
 
+export const restorePassword = (data) => {
+  return request('/password-reset', {
+    method: 'POST',
+    body: getBody(data),
+  });
+};
+
+export const resetPassword = (data) => {
+  return request('/password-reset/reset', {
+    method: 'POST',
+    body: getBody(data),
+  });
+};
+
+export const authRegister = (data) => {
+  return request('/auth/register', {
+    method: 'POST',
+    body: getBody(data),
+  });
+};
+
+export const authLogin = (data) => {
+  return request('/auth/login', {
+    method: 'POST',
+    body: getBody(data),
+  });
+};
+
+export const authRefresh = (data) => {
+  return request('/auth/token', {
+    method: 'POST',
+    body: getBody(data),
+  });
+};
+
+export const authLogout = (data) => {
+  return request('/auth/logout', {
+    method: 'POST',
+    body: getBody(data),
+  });
+};
+
 const request = async (url, init = {}) => {
   const res = await fetch(BASE_URL + url, {
     ...init,
@@ -19,6 +61,7 @@ const request = async (url, init = {}) => {
       'Content-Type': 'application/json',
     },
   });
+
   if (!res.ok) {
     throw new Error(`Ошибка получения данных в ${url}: ${res.status}`);
   }

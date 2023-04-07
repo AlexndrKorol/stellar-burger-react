@@ -4,16 +4,37 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import * as api from "../../utils/api";
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const res = await api.restorePassword({ email });
+      if (res.success) {
+        navigate("/reset-password");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className={styles.root}>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
-        <Input placeholder="Укажите e-mail" type="email" />
-        <Button htmlType="button" type="primary" size="large">
+        <Input
+          placeholder="Укажите e-mail"
+          type="email"
+          value={email}
+          onInput={(e) => setEmail(e.target.value)}
+        />
+        <Button htmlType="submit" type="primary" size="large">
           Восстановить
         </Button>
 
@@ -31,10 +52,9 @@ export const ForgotPasswordPage = () => {
             >
               Войти
             </Button>
-          </div> 
+          </div>
         </div>
-      </div>
+      </form>
     </div>
-    );
-  };
-
+  );
+};
