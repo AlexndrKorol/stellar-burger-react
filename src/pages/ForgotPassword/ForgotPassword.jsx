@@ -6,10 +6,16 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as api from "../../utils/api";
+import { useLoggedIn } from "../../hooks/logged-in";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../services/reducers/auth";
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
+
+  useLoggedIn();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +23,7 @@ export const ForgotPasswordPage = () => {
     try {
       const res = await api.restorePassword({ email });
       if (res.success) {
+        dispatch(authActions.setRestoreOk());
         navigate("/reset-password");
       }
     } catch (error) {

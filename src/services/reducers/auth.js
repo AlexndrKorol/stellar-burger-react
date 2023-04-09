@@ -4,7 +4,6 @@ import {
 } from '@reduxjs/toolkit';
 import * as api from '../../utils/api';
 import { getCookie } from '../../utils/cookie';
-import { useState } from 'react'
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',
@@ -15,6 +14,8 @@ const getInitialState = () => ({
   user: null,
   accessToken: getCookie(DATA_KEY.ACCESS_TOKEN),
   refreshToken: localStorage.getItem(DATA_KEY.REFRESH_TOKEN) || null,
+  returnUrl: '',
+  restoreOk: false,
 });
 
 const setAccessToken = (state, accessToken) => {
@@ -40,6 +41,14 @@ const setRefreshToken = (state, refreshToken) => {
 export const slice = createSlice({
   name: 'auth',
   initialState: getInitialState(),
+  reducers: {
+    setReturnUrl(state, { payload }) {
+      state.returnUrl = payload;
+    },
+    setRestoreOk(state) {
+      state.restoreOk = true;
+    }
+  },
   extraReducers: (builder) => {
     const onRegister = (state, {
       payload
@@ -63,6 +72,7 @@ export const slice = createSlice({
     });
     builder.addCase(authUser.fulfilled, (state, { payload }) => {
       state.user = payload.user;
+
     });
     // кейс для записи изменений в стор
     builder.addCase(patchUser.fulfilled, (state, { payload }) => {

@@ -3,14 +3,23 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styles from "./ResetPassword.module.css";
 import * as api from "../../utils/api";
+import { useLoggedIn } from "../../hooks/logged-in";
+import { useSelector } from "react-redux";
 
 export const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
+  const { restoreOk } = useSelector((state) => state.auth);
+
+  useLoggedIn();
+
+  if (!restoreOk) {
+    return <Navigate to="/forgot-password" replace />
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();

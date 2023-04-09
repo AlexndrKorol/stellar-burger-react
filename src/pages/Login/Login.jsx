@@ -5,8 +5,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../services/reducers/auth";
+import { useLoggedIn } from "../../hooks/logged-in";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,11 @@ export const LoginPage = () => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const returnUrl = useSelector((state) => state.auth.returnUrl);
+
+  useLoggedIn();
 
   const onChange = (event) => {
     const name = event.target.name;
@@ -31,7 +37,7 @@ export const LoginPage = () => {
     try {
       const res = await dispatch(authLogin(formValue)).unwrap();
       if (res.success) {
-        navigate('/');
+        navigate(returnUrl || '/');
       }
     } catch (error) {
       console.error(error);
@@ -51,8 +57,9 @@ export const LoginPage = () => {
         />
         <Input
           placeholder="Пароль"
-          type="password"
-          icon={"ShowIcon"}
+          type={showPassword ? 'text' : 'password'}
+          icon={showPassword ? 'HideIcon' : "ShowIcon"}
+          onIconClick={() => setShowPassword(!showPassword)}
           name="password"
           value={formValue.password}
           onInput={onChange}

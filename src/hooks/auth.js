@@ -1,12 +1,9 @@
 import {
-  useEffect
+  useEffect, useState
 } from "react";
 import {
   useDispatch, useSelector
 } from "react-redux";
-import {
-  useNavigate
-} from "react-router-dom";
 import {
   authUser,
   authRefresh
@@ -14,42 +11,43 @@ import {
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { user, refreshToken, accessToken } = useSelector((state) => state.auth);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     (async () => {
-      if (user) {
-        return;
-      }
-
       if (accessToken) {
         try {
           const res = await dispatch(authUser()).unwrap();
           if (res.success) {
-            return;
+
           } else {
             throw Error(JSON.stringify(res));
           }
         } catch (error) {
           console.error(error);
         }
-      }
-      
-      if (refreshToken) {
+      } else if (refreshToken) {
         try {
           const res = await dispatch(authRefresh()).unwrap();
           if (res.success) {
             await dispatch(authUser()).unwrap();
-            return;
           } else {
             throw Error(JSON.stringify(res));
           }
         } catch (error) {
-          navigate('/login');
+
         }
       }
+
+      setIsFinished(true);
     })();
 
-  }, [dispatch, navigate, user, accessToken, refreshToken]);
+  }, []);
+
+
+  return {
+    user,
+    isFinished,
+  }
 };

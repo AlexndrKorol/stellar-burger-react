@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { authRegister } from "../../services/reducers/auth";
 import { useDispatch } from "react-redux";
+import { useLoggedIn } from "../../hooks/logged-in";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export const RegisterPage = () => {
     password: "",
   });
   const dispatch = useDispatch();
+
+  useLoggedIn();
 
   const onSubmit = async (event) => {
     event.preventDefault();

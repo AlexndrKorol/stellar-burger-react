@@ -1,23 +1,27 @@
-// import { authUser, useProvideAuth } from '../../services/reducers/auth';
-// import { Navigate } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
+import { useAuth } from "../../hooks/auth";
+import { Navigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from '../../services/reducers/auth'
+import { useEffect } from "react";
 
-// export const ProtectedRouteElement = ({ element }) => {
-//   let { useProvideAuth, ...auth } = authUser();
-//   const [isUserLoaded, setUserLoaded] = useState(false);
+export const ProtectedRouteElement = ({ element }) => {
+  const { user, isFinished } = useAuth();
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
-//   const init = async () => {
-//     await useProvideAuth();
-//     setUserLoaded(true);
-//   };
+  useEffect(() => {
+    if (isFinished && !user) {
+      dispatch(authActions.setReturnUrl(pathname));
+    }
+  }, [isFinished, user]);
 
-//   useEffect(() => {
-//     init();
-//   }, []);
-  
-//   if(!isUserLoaded) {
-//     return null;
-//   }
+  if (!isFinished) {
+    return null;
+  }
 
-//   return auth.user ? element : <Navigate to="/login" replace />;
-// }
+  if (user) {
+    return element;
+  } else {
+    return <Navigate to="/login" replace />;
+  }
+};
