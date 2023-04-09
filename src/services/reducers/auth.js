@@ -63,6 +63,10 @@ export const slice = createSlice({
     builder.addCase(authUser.fulfilled, (state, { payload }) => {
       state.user = payload.user;
     });
+    // кейс для записи изменений в стор
+    builder.addCase(patchUser.fulfilled, (state, { payload }) => {
+      state.user = payload.user;
+    })
   }
 });
 
@@ -117,6 +121,17 @@ export const authUser = createAsyncThunk(
     return await api.authUser({ accessToken });
   },
 );
+
+// функция усилитель измен данные юзера
+export const patchUser = createAsyncThunk(
+  'auth/profile',
+  async (data, { getState }) => {
+    const state = getState();
+    const accessToken = state.auth.accessToken;
+
+    return await api.patchUser({data, accessToken });
+  },
+)
 
 export const authActions = slice.actions;
 export default slice.reducer;

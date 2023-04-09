@@ -60,6 +60,15 @@ export const authUser = ({ accessToken }) => {
   });
 };
 
+// api запрос патч на изменение данных юзера
+export const patchUser = ({ data, accessToken }) => {
+  return request('/auth/user/', {
+    method: 'PATCH',
+    body: getBody(data),
+    accessToken,
+  });
+}
+
 const request = async (url, init = {}) => {
   const res = await fetch(BASE_URL + url, {
     ...init,

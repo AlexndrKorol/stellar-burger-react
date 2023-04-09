@@ -1,10 +1,11 @@
-import styles from "./Profile.module.css";
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogout } from "../../services/reducers/auth";
+import { authLogout, authUser, patchUser} from "../../services/reducers/auth";
 import { useEffect, useState } from "react";
+import styles from "./Profile.module.css";
+import cn from "classnames";
+import * as api from "../../utils/api";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export const ProfilePage = () => {
   const [formValue, setFormValue] = useState({
     name: '',
     email: '',
-    password: "****",
+    password: '',
   });
 
   // TODO remove after protected route
@@ -26,6 +27,35 @@ export const ProfilePage = () => {
       });
     }
   }, [user, setFormValue]);
+
+
+  // обработчик формы
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const res = await dispatch(patchUser(formValue)).unwrap();
+      if (res.success) {
+        navigate('/profile');
+      }
+    } catch (error) {
+      console.error('User info update error', error);
+    }
+  };
+
+  //  обработчик кнопки отмена
+  const onCancel = async (event) => {
+    event.preventDefault();
+
+    try {
+      const res = await dispatch(authUser(formValue)).unwrap();
+      if (res.success) {
+        navigate('/profile');
+      }
+    } catch (error) {
+      console.error('User info cancel error', error);
+    }
+  };
 
   const onLogout = async () => {
     try {
@@ -96,7 +126,7 @@ export const ProfilePage = () => {
         </p>
       </nav>
 
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <Input
           placeholder="Имя"
           type="text"
@@ -121,7 +151,28 @@ export const ProfilePage = () => {
           value={formValue.password}
           onInput={onChange}
         />
-      </div>
+
+            {/* добавлены кнопки отсутсвующие в макете */}
+        <div className={styles.button_container}>
+        <Button
+            htmlType="submit"
+            type="primary"
+            size="medium"
+          >
+            Сохранить
+          </Button>
+
+          <Button
+            htmlType="submit"
+            type="secondary"
+            size="medium"
+            extraClass={styles.button}
+            onClick={onCancel}
+          >
+            Отмена
+          </Button>
+        </div> 
+      </form>
 
       <div className={cn(styles.menu, "ml-15")}></div>
     </div>

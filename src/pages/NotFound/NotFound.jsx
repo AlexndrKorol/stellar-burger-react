@@ -1,4 +1,4 @@
-import pic from '../../images/404.jpeg';
+import pic from '../../images/404.jpg';
 import styles from './NotFound.module.css';
 
 export const NotFoundPage = () => {
