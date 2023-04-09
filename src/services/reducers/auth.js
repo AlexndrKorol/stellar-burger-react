@@ -4,6 +4,7 @@ import {
 } from '@reduxjs/toolkit';
 import * as api from '../../utils/api';
 import { getCookie } from '../../utils/cookie';
+import { useState } from 'react'
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',
@@ -121,6 +122,24 @@ export const authUser = createAsyncThunk(
     return await api.authUser({ accessToken });
   },
 );
+
+// // функция для protected route
+
+// export function useProvideAuth() {
+//   const [user, setUser] = useState(null);
+
+//   const getUser = async () => {
+//     return await authUser()
+//       .then(res => res.json())
+//       .then(data => {
+//         if (data.success) {
+//             setUser({ ...data.user, id: data.user._id });
+//         }
+//         return data.success;
+//       });
+//   };
+// }
+
 
 // функция усилитель измен данные юзера
 export const patchUser = createAsyncThunk(

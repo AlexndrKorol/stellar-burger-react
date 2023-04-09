@@ -5,7 +5,6 @@ import { authLogout, authUser, patchUser} from "../../services/reducers/auth";
 import { useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import cn from "classnames";
-import * as api from "../../utils/api";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();

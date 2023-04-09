@@ -7,6 +7,7 @@ import { ResetPasswordPage } from '../../pages/ResetPassword/ResetPassword';
 import { ProfilePage } from '../../pages/Profile/Profile';
 import { IngredientsPage } from '../../pages/Ingredients/Ingredients';
 import { NotFoundPage } from '../../pages/NotFound/NotFound';
+import { ProtectedRouteElement } from "../protected-route/protected-route";
 
 export const AppRouter = () => {
   return (
@@ -16,6 +17,7 @@ export const AppRouter = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      {/* <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/> */}
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/ingredients/:id" element={<IngredientsPage />} />
       <Route path="*" element={<NotFoundPage />} />
