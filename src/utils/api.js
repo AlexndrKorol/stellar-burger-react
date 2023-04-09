@@ -39,10 +39,10 @@ export const authLogin = (data) => {
   });
 };
 
-export const authRefresh = (data) => {
+export const authRefresh = ({ token }) => {
   return request('/auth/token', {
     method: 'POST',
-    body: getBody(data),
+    body: getBody({ token }),
   });
 };
 
@@ -53,12 +53,20 @@ export const authLogout = (data) => {
   });
 };
 
+export const authUser = ({ accessToken }) => {
+  return request('/auth/user', {
+    method: 'GET',
+    accessToken,
+  });
+};
+
 const request = async (url, init = {}) => {
   const res = await fetch(BASE_URL + url, {
     ...init,
     headers: {
       ...init.headers,
       'Content-Type': 'application/json',
+      'Authorization': init.accessToken,
     },
   });
 
