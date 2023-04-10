@@ -61,7 +61,7 @@ export const BurgerConstructor = () => {
     <section ref={drop} className={styles.wrapper}>
       <div className='ml-6 mb-4'>
         {!!bun && (
-          <ConstructorElement text={bun.name} price={bun.price} thumbnail={bun.image} type='top' isLocked={true} />
+          <ConstructorElement text={bun.name + ' (верх)'} price={bun.price} thumbnail={bun.image} type='top' isLocked={true} />
         )}
       </div>
 
@@ -75,7 +75,7 @@ export const BurgerConstructor = () => {
       </div>
       <div className='ml-6 mt-4'>
         {!!bun && (
-          <ConstructorElement text={bun.name} price={bun.price} thumbnail={bun.image} type='bottom' isLocked={true} />
+          <ConstructorElement text={bun.name + ' (низ)'} price={bun.price} thumbnail={bun.image} type='bottom' isLocked={true} />
         )}
       </div>
 
