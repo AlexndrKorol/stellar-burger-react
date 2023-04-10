@@ -1,4 +1,3 @@
-import styles from "./Login.module.css";
 import {
   Input,
   Button,
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../services/reducers/auth";
 import { useLoggedIn } from "../../hooks/logged-in";
+import styles from "./Login.module.css";
 
 export const LoginPage = () => {
   const navigate = useNavigate();

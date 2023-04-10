@@ -1,4 +1,3 @@
-import styles from "./Register.module.css";
 import {
   Input,
   Button,
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { authRegister } from "../../services/reducers/auth";
 import { useDispatch } from "react-redux";
 import { useLoggedIn } from "../../hooks/logged-in";
+import styles from "./Register.module.css";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -17,6 +17,8 @@ export const RegisterPage = () => {
     password: "",
   });
   const dispatch = useDispatch();
+
+  const[showPassword, setShowPassword] = useState(false);
 
   useLoggedIn();
 
@@ -62,8 +64,9 @@ export const RegisterPage = () => {
         />
         <Input
           placeholder="Пароль"
-          type="password"
-          icon={"ShowIcon"}
+          type={showPassword ? 'text' : 'password'}
+          icon={showPassword ? 'HideIcon' : "ShowIcon"}
+          onIconClick={() => setShowPassword(!showPassword)}
           name="password"
           value={formValue.password}
           onInput={onChange}
