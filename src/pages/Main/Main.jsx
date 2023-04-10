@@ -1,7 +1,7 @@
-import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
-import styles from './Main.module.css';
-import cn from 'classnames'
+import { BurgerIngredients } from "../../components/burger-ingredients/burger-ingredients";
+import { BurgerConstructor } from "../../components/burger-constructor/burger-constructor";
+import styles from "./Main.module.css";
+import cn from "classnames"
 
 export const MainPage = () => {
   return (

@@ -2,8 +2,8 @@ import {
   createAsyncThunk,
   createSlice
 } from '@reduxjs/toolkit';
-import * as api from '../../utils/api';
 import { getCookie } from '../../utils/cookie';
+import * as api from '../../utils/api';
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',
@@ -133,22 +133,6 @@ export const authUser = createAsyncThunk(
   },
 );
 
-// // функция для protected route
-
-// export function useProvideAuth() {
-//   const [user, setUser] = useState(null);
-
-//   const getUser = async () => {
-//     return await authUser()
-//       .then(res => res.json())
-//       .then(data => {
-//         if (data.success) {
-//             setUser({ ...data.user, id: data.user._id });
-//         }
-//         return data.success;
-//       });
-//   };
-// }
 
 
 // функция усилитель измен данные юзера

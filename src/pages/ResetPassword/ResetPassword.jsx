@@ -6,15 +6,14 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLoggedIn } from "../../hooks/logged-in";
 import { useSelector } from "react-redux";
-import * as api from "../../utils/api";
 import styles from "./ResetPassword.module.css";
+import * as api from "../../utils/api";
 
 export const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const { restoreOk } = useSelector((state) => state.auth);
-
   const[showPassword, setShowPassword] = useState(false);
 
   useLoggedIn();
@@ -41,7 +40,7 @@ export const ResetPasswordPage = () => {
     <div className={styles.root}>
       <form className={styles.form} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
-        <Input
+         <Input
           placeholder="Введите новый пароль"
           type={showPassword ? 'text' : 'password'}
           icon={showPassword ? 'HideIcon' : "ShowIcon"}

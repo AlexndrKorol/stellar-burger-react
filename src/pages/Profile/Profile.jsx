@@ -18,8 +18,8 @@ export const ProfilePage = () => {
     email: "",
     password: "",
   });
+  const [isButtonDisabled, setIsButtonDissabled] = useState(false);
 
-  // TODO remove after protected route
   useEffect(() => {
     if (user) {
       setFormValue({
@@ -30,7 +30,6 @@ export const ProfilePage = () => {
     }
   }, [user, setFormValue]);
 
-  // обработчик формы
   const onSubmit = async (event) => {
     event.preventDefault();
 
@@ -44,9 +43,8 @@ export const ProfilePage = () => {
     }
   };
 
-  //  обработчик кнопки отмена
   const onCancel = async (event) => {
-
+    setIsButtonDissabled(true);
     try {
       const res = await dispatch(authUser(formValue)).unwrap();
       if (res.success) {
@@ -77,6 +75,10 @@ export const ProfilePage = () => {
     });
   };
 
+  const onOrderPage = async () => {
+     navigate("/orders")
+  };
+
   return (
     <div className={cn(styles.main_container, "pt-30")}>
       <nav className={cn(styles.menu, "mr-15")}>
@@ -90,6 +92,7 @@ export const ProfilePage = () => {
 
         <Link
           to="/profile/orders"
+          onClick={onOrderPage}
           className={cn(
             styles.link,
             styles.link_inactive,
@@ -152,9 +155,12 @@ export const ProfilePage = () => {
           onInput={onChange}
         />
 
-        {/* добавлены кнопки отсутсвующие в макете */}
         <div className={styles.button_container}>
-          <Button htmlType="submit" type="primary" size="medium">
+          <Button 
+            htmlType="submit" 
+            type="primary" 
+            size="medium"
+          >
             Сохранить
           </Button>
 
@@ -164,6 +170,7 @@ export const ProfilePage = () => {
             size="medium"
             extraClass={styles.button}
             onClick={onCancel}
+            disabled={isButtonDisabled}
           >
             Отмена
           </Button>

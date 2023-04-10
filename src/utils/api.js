@@ -4,6 +4,10 @@ export const getIngredients = () => {
   return request('/ingredients');
 };
 
+export const getIngredientById = ({ id }) => {
+  return request(`/ingredients/${id}`);
+};
+
 export const createOrder = async (data) => {
   return request('/orders', {
     method: 'POST',
@@ -60,7 +64,6 @@ export const authUser = ({ accessToken }) => {
   });
 };
 
-// api запрос патч на изменение данных юзера
 export const patchUser = ({ data, accessToken }) => {
   return request('/auth/user/', {
     method: 'PATCH',

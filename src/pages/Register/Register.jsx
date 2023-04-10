@@ -17,7 +17,6 @@ export const RegisterPage = () => {
     password: "",
   });
   const dispatch = useDispatch();
-
   const[showPassword, setShowPassword] = useState(false);
 
   useLoggedIn();
