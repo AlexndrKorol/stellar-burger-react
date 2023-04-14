@@ -2,19 +2,36 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { burgerConstructorActions } from '../../services/reducers/burger-constructor';
-import PropTypes from 'prop-types';
 import ingredientPropTypes from '../../utils/prop-types';
 import styles from './burger-constructor-item.module.css';
 import cn from 'classnames';
+import { FC } from 'react'
 
-export const BurgerConstructorItem = ({ data, lastBun, onDelete }) => {
+interface IBurgerConctructor {
+  data: {
+    name: string;
+    price: number;
+    image: string;
+    __v: number;
+    _id: string;
+  },
+  lastBun?: boolean;
+  onDelete?: (data: typeof ingredientPropTypes) => void;
+}
+
+interface IDragItem {
+  type: 'ingredient-list';
+  // item: typeof ;
+}
+
+export const BurgerConstructorItem: FC<IBurgerConctructor> = ({ data, lastBun, onDelete }) => {
   const dispatch = useDispatch();
 
-  const [dragState, drag] = useDrag({
+  const [dragState, drag] = useDrag<IDragItem>({
     type: 'ingredient-list',
     item: data,
   });
-  const [dropState, drop] = useDrop(() => ({
+  const [dropState, drop] = useDrop<IDragItem>(() => ({
     accept: 'ingredient-list',
     item: data,
     drop: (item, ...args) => {
@@ -25,7 +42,7 @@ export const BurgerConstructorItem = ({ data, lastBun, onDelete }) => {
   return (
     <div ref={drag}>
       <div ref={drop} className={cn(styles.element_item, lastBun ? '' : 'mb-4')}>
-        <DragIcon />
+        <DragIcon type={'primary'} />
         <ConstructorElement
           text={data.name}
           price={data.price}
@@ -37,8 +54,4 @@ export const BurgerConstructorItem = ({ data, lastBun, onDelete }) => {
   );
 };
 
-BurgerConstructorItem.propTypes = {
-  data: ingredientPropTypes.isRequired,
-  lastBun: PropTypes.bool,
-  onDelete: PropTypes.func,
-};
+export default BurgerConstructorItem;

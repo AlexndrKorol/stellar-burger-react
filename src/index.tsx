@@ -8,9 +8,10 @@ import { App } from './components/app/app';
 import store from './services/store';
 import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+    <>
     <BrowserRouter>
       <Provider store={store}>
         <DndProvider backend={HTML5Backend}>
@@ -18,5 +19,7 @@ root.render(
         </DndProvider>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
+    </>
+   
+  // </React.StrictMode>
 );

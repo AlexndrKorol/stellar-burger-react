@@ -4,8 +4,17 @@ import ingredientPropTypes from "../../utils/prop-types";
 import styles from "./category.module.css";
 import cn from "classnames";
 import { useNavigate } from "react-router-dom";
+import { FC } from "react";
 
-export const Category = ({ title, id, ingredients, headerRef }) => {
+interface ICategory {
+  title: string;
+  id: string;
+  ingredients: typeof ingredientPropTypes[] | null | undefined;
+  headerRef?: React.RefObject<HTMLHeadingElement>;
+}
+
+
+export const Category: FC<ICategory> = ({ title, id, ingredients, headerRef }) => {
   const navigate = useNavigate();
 
   const onClick = (data) => {
@@ -30,10 +39,5 @@ export const Category = ({ title, id, ingredients, headerRef }) => {
   );
 };
 
-Category.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
 
 export default Category;

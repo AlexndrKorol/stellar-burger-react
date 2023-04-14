@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Route, Routes, useLocation } from "react-router-dom"
 import { MainPage } from '../../pages/Main/Main';
 import { LoginPage } from '../../pages/Login/Login';
@@ -10,9 +11,9 @@ import { NotFoundPage } from '../../pages/NotFound/NotFound';
 import { ProtectedRouteElement } from "../protected-route/protected-route";
 import { IngredientModalPage } from "../../pages/IngredientModal/IngredientModal";
 import { OrdersPage } from "../../pages/Profile/Orders";
-import { FeedPage } from "../../pages/Feed/Feed"
+import { FeedPage } from "../../pages/Feed/Feed";
 
-export const AppRouter = () => {
+export const AppRouter: FC = () => {
   const { state } = useLocation();
 
   const isModal = state?.ingredientModal;

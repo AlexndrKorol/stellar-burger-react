@@ -1,8 +1,24 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 import styles from './ingredient-details.module.css';
 import cn from 'classnames';
 
-export const IngredientDetails = ({ data }) => {
+
+interface IIngredientDetails {
+  data: {
+    _id: string;
+    __v: number;
+    calories: number;
+    image: string;
+    flag: boolean;
+    name: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    image_large: string;
+  };
+}
+
+export const IngredientDetails: FC<IIngredientDetails> = ({ data }) => {
   const items = [
     {
       label: 'Калории,ккал',
@@ -40,16 +56,6 @@ export const IngredientDetails = ({ data }) => {
       </div>
     </section>
   )
-}
-
-IngredientDetails.propTypes = {
-  data: PropTypes.shape({
-    _id: PropTypes.string,
-    __v: PropTypes.number,
-    calories: PropTypes.number,
-    image: PropTypes.string,
-    flag: PropTypes.bool,
-  }).isRequired
 }
 
 export default IngredientDetails;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useState } from 'react';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -20,7 +20,7 @@ export const BurgerConstructor = () => {
   const isEmpty = !bun && ingredients.length === 0;
   const dispatch = useDispatch();
 
-  const [isShowOrderModal, setIsShowOrderModal] = React.useState(false);
+  const [isShowOrderModal, setIsShowOrderModal] = useState(false);
 
   const handleOrderClick = async () => {
     const res = await dispatch(
