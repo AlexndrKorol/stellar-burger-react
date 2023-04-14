@@ -9,7 +9,8 @@ import { IngredientsPage } from '../../pages/Ingredients/Ingredients';
 import { NotFoundPage } from '../../pages/NotFound/NotFound';
 import { ProtectedRouteElement } from "../protected-route/protected-route";
 import { IngredientModalPage } from "../../pages/IngredientModal/IngredientModal";
-import { OrdersPage } from "../../pages/Profile/Orders"
+import { OrdersPage } from "../../pages/Profile/Orders";
+import { FeedPage } from "../../pages/Feed/Feed"
 
 export const AppRouter = () => {
   const { state } = useLocation();
@@ -23,7 +24,7 @@ export const AppRouter = () => {
           <MainPage />
           <IngredientModalPage />
         </>}  /> } /> }
-        <Route path="/" element={<ProtectedRouteElement element={<MainPage />} />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/ingredients/:id"  element={<ProtectedRouteElement element={<IngredientsPage />}  /> } />
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>
 
@@ -32,6 +33,7 @@ export const AppRouter = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile/orders" element={<OrdersPage />} />
+        <Route path="/feed" element={<FeedPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

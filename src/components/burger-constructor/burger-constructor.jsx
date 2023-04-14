@@ -84,9 +84,14 @@ export const BurgerConstructor = () => {
           <p className='text text_type_digits-medium mr-2'>{sum}</p>
           <CurrencyIcon type='primary' />
         </div>
-        <Button htmlType='button' type='primary' size='large' onClick={handleOrderClick}>
-          Оформить заказ
-        </Button>
+        {ingredients == false || bun == null
+          ? <Button htmlType='button' type='primary' size='large' onClick={handleOrderClick} disabled>
+              Оформить заказ
+            </Button>
+          : <Button htmlType='button' type='primary' size='large' onClick={handleOrderClick}>
+              Оформить заказ
+             </Button>
+        }
       </div>
       {isShowOrderModal && (
         <Modal onClose={() => setIsShowOrderModal(false)}>
