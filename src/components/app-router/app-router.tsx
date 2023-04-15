@@ -21,10 +21,10 @@ export const AppRouter: FC = () => {
   return (
     <>
       <Routes>
-        { isModal && <Route path="/ingredients/:id"  element={<ProtectedRouteElement element={<>
+        { isModal && <Route path="/ingredients/:id"element={<>
           <MainPage />
           <IngredientModalPage />
-        </>}  /> } /> }
+        </>}  /> }
         <Route path="/" element={<MainPage />} />
         <Route path="/ingredients/:id"  element={<ProtectedRouteElement element={<IngredientsPage />}  /> } />
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>

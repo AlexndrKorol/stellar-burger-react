@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';

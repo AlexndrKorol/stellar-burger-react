@@ -1,21 +1,27 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDrop } from 'react-dnd';
 import { burgerConstructorActions, burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
-import { createOrder, createOrderSelectors } from '../../services/reducers/created-order';
+import { createOrder } from '../../services/reducers/created-order';
 import { useDispatch, useSelector } from 'react-redux';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import styles from './burger-constructor.module.css';
 import cn from 'classnames';
+import { useAuth } from '../../hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import { authActions } from '../../services/reducers/auth';
+import classNames from 'classnames';
 
 export const BurgerConstructor = () => {
   const bun = useSelector(burgerConstructorSelectors.bun);
   const ingredients = useSelector(burgerConstructorSelectors.ingredients);
   const sum = useSelector(burgerConstructorSelectors.sum);
   const orderIds = useSelector(burgerConstructorSelectors.orderIds);
-  const orderData = useSelector(createOrderSelectors.data);
+  const { data: orderData, isLoading: isOrderLoading } = useSelector((state) => state.createdOrder);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const isEmpty = !bun && ingredients.length === 0;
   const dispatch = useDispatch();
@@ -23,16 +29,22 @@ export const BurgerConstructor = () => {
   const [isShowOrderModal, setIsShowOrderModal] = useState(false);
 
   const handleOrderClick = async () => {
-    const res = await dispatch(
-      createOrder({
-        ingredients: orderIds,
-      }),
-    );
-
-    if (res.meta.requestStatus === 'fulfilled') {
-      setIsShowOrderModal(true);
+    if (user) {
+      const res = await dispatch(
+        createOrder({
+          ingredients: orderIds,
+        }),
+      );
+  
+      if (res.meta.requestStatus === 'fulfilled') {
+        setIsShowOrderModal(true);
+        dispatch(burgerConstructorActions.reset());
+      } else {
+        console.error(res);
+      }
     } else {
-      console.error(res);
+      dispatch(authActions.setReturnUrl('/'));
+      navigate('/login');
     }
   };
   const [dropState, drop] = useDrop(() => ({
@@ -47,9 +59,18 @@ export const BurgerConstructor = () => {
     },
   }));
 
+  const modalJsx = isShowOrderModal && (
+    <Modal onClose={() => setIsShowOrderModal(false)}>
+      <OrderDetails data={orderData} />
+    </Modal>
+  );
+
   if (isEmpty) {
     return (
-      <div ref={drop} className={cn(styles.empty, "text text_type_main-medium")}>Добавьте булку и ингредиенты</div>
+      <>
+        <div ref={drop} className={cn(styles.empty, "text text_type_main-medium")}>Добавьте булку и ингредиенты</div>
+        { modalJsx }
+      </>
     );
   }
 
@@ -84,20 +105,18 @@ export const BurgerConstructor = () => {
           <p className='text text_type_digits-medium mr-2'>{sum}</p>
           <CurrencyIcon type='primary' />
         </div>
-        {ingredients == false || bun == null
-          ? <Button htmlType='button' type='primary' size='large' onClick={handleOrderClick} disabled>
-              Оформить заказ
-            </Button>
-          : <Button htmlType='button' type='primary' size='large' onClick={handleOrderClick}>
-              Оформить заказ
-             </Button>
-        }
+        <Button
+          htmlType='button'
+          type='primary'
+          size='large'
+          onClick={handleOrderClick}
+          disabled={bun == null}
+          extraClass={classNames({ [styles.loading]: isOrderLoading } )}
+        >
+          {isOrderLoading ? 'Загрузка...' : 'Оформить заказ' }
+        </Button>
       </div>
-      {isShowOrderModal && (
-        <Modal onClose={() => setIsShowOrderModal(false)}>
-          <OrderDetails data={orderData} />
-        </Modal>
-      )}
+      { modalJsx }
     </section>
   );
 };

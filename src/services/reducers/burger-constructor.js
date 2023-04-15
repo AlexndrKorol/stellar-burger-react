@@ -27,7 +27,8 @@ export const slice = createSlice({
       });
     },
     reset: (state) => {
-      state = getInitialState();
+      state.bun = null;
+      state.ingredients = [];
     },
     reorder: (state, { payload }) => {
       const getIndexByUniqueId = (uniqueId) =>

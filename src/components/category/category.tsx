@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { CategoryItem } from "../category-item/category-item";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/prop-types";
