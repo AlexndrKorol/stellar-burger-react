@@ -11,5 +11,5 @@ export const useLoggedIn = () => {
       console.log(' useLoggedIn has user ');
       navigate('/', { replace: true });
     }
-  }, [isFinished]);
+  }, [isFinished, user, navigate]);
 };

@@ -3,7 +3,27 @@ import {
   createSlice
 } from '@reduxjs/toolkit';
 import { getCookie } from '../../utils/cookie';
+import { AppState } from '../store';
 import * as api from '../../utils/api';
+
+
+
+// const authInitialState: IAuthState = {
+//   user: null,
+//   accessToken: null,
+//   refreshToken: null,
+//   returnUrl: any,
+//   restoreOk: false,
+// }
+
+// type IAuthState = {
+//   user: any;
+//   accessToken: string | null;
+//   refreshToken: string | null;
+//   returnUrl: string;
+//   restoreOk: boolean;
+// }
+
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',

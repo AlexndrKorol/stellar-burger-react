@@ -3,17 +3,19 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { authLogout, authUser, patchUser } from "../../services/reducers/auth";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { AppState, useAppDispatch } from '../../services/store';
+import { IFormProps } from "../../types/form";
 import styles from "./Profile.module.css";
 import cn from "classnames";
 
-export const ProfilePage = () => {
-  const dispatch = useDispatch();
+export const ProfilePage: FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const [formValue, setFormValue] = useState({
+  const [formValue, setFormValue] = useState<IFormProps>({
     name: "",
     email: "",
     password: "",

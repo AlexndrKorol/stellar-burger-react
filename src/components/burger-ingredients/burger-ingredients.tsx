@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Category } from '../category/category';
 import { throttle } from 'throttle-debounce';
@@ -7,7 +7,7 @@ import cn from 'classnames';
 import { useIngredients } from '../../hooks/ingredients';
 import { IngredientType } from '../../types/ingredient';
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients: FC = () => {
   const { ingredients } = useIngredients();
   const [current, setCurrent] = useState(IngredientType.BUN);
   const containerRef = useRef<HTMLElement>(null);

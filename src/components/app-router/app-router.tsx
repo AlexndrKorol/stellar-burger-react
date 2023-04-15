@@ -21,7 +21,8 @@ export const AppRouter: FC = () => {
   return (
     <>
       <Routes>
-        { isModal && <Route path="/ingredients/:id"element={<>
+        { isModal && <Route path="/ingredients/:id"element={
+        <>
           <MainPage />
           <IngredientModalPage />
         </>}  /> }

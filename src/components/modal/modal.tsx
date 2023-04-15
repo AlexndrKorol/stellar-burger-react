@@ -1,17 +1,16 @@
-import React from "react"
-import { createPortal } from 'react-dom'
+import { FC, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TModalProps } from '../../types/modal';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types'
-import styles from './modal.module.css'
 import cn from 'classnames';
+import styles from './modal.module.css';
 
+export const modalRoot = document.querySelector('#modals') as HTMLElement;
 
-
-export const modalRoot = document.querySelector('#modals')
-export const Modal = ({ title, onClose, children }) => {
-  React.useEffect(() => {
-    function closeEsc(evt) {
+export const Modal: FC<TModalProps> = ({ title, onClose, children }) => {
+  useEffect(() => {
+    function closeEsc(evt: KeyboardEvent) {
       if (evt.key === 'Escape') {
         onClose();
       }
@@ -28,20 +27,14 @@ export const Modal = ({ title, onClose, children }) => {
       <section className={styles.modal}>
         <div className={cn(styles.header, 'ml-10 mt-10 mr-10')}>
           <h2 className="text text_type_main-large">{title}</h2>
-          <CloseIcon onClick={onClose} />
+          <CloseIcon type={'primary'} onClick={onClose} />
         </div>
         {children}
       </section>
       <ModalOverlay onClick={onClose} />
     </>,
     modalRoot
-  )
-}
-
-modalRoot.propTypes = {
-  title: PropTypes.string.isRequired,
-  onClose: PropTypes.func,
-  children: PropTypes.node.isRequired
-}
+  );
+};
 
 export default modalRoot;

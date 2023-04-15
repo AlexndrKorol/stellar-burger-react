@@ -1,16 +1,10 @@
 import { FC } from 'react';
+import { TOrderDetails } from '../../types/modal';
 import doneImg from '../../images/done.svg';
 import styles from './order-details.module.css';
 import cn from 'classnames';
 
-type TOrderDetails = {
-  data: {
-    name: string;
-    order: {
-      number: string;
-    };
-  };
-}
+
 
 export const OrderDetails: FC<TOrderDetails> = ({ data }) => {
   return (

@@ -8,6 +8,8 @@ import { authRegister } from "../../services/reducers/auth";
 import { useDispatch } from "react-redux";
 import { useLoggedIn } from "../../hooks/logged-in";
 import styles from "./Register.module.css";
+import { IFormProps } from "../../types/form";
+import { AppState, AppDispatch } from "../../services/store";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();

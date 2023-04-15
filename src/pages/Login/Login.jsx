@@ -58,7 +58,7 @@ export const LoginPage = () => {
         <Input
           placeholder="Пароль"
           type={showPassword ? 'text' : 'password'}
-          icon={showPassword ? 'HideIcon' : "ShowIcon"}
+          icon={showPassword ? 'HideIcon' : 'ShowIcon'}
           onIconClick={() => setShowPassword(!showPassword)}
           name="password"
           value={formValue.password}
