@@ -16,7 +16,7 @@ import { FeedPage } from "../../pages/Feed/Feed";
 export const AppRouter: FC = () => {
   const { state } = useLocation();
 
-  const isModal = state?.ingredientModal;
+  const isModal = Boolean(state?.ingredientModal);
   
   return (
     <>

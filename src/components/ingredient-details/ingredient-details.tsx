@@ -1,21 +1,11 @@
 import { FC } from 'react';
 import styles from './ingredient-details.module.css';
 import cn from 'classnames';
+import { IngredientWithUid } from '../../types/ingredient';
 
 
 interface IIngredientDetails {
-  data: {
-    _id: string;
-    __v: number;
-    calories: number;
-    image: string;
-    flag: boolean;
-    name: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    image_large: string;
-  };
+  data: IngredientWithUid;
 }
 
 export const IngredientDetails: FC<IIngredientDetails> = ({ data }) => {

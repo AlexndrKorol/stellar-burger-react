@@ -1,30 +1,32 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDrop } from 'react-dnd';
 import { burgerConstructorActions, burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
 import { createOrder } from '../../services/reducers/created-order';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
-import styles from './burger-constructor.module.css';
-import cn from 'classnames';
 import { useAuth } from '../../hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { authActions } from '../../services/reducers/auth';
-import classNames from 'classnames';
+import { AppState, useAppDispatch } from '../../services/store';
+import { Ingredient, IngredientType, IngredientWithUid } from '../../types/ingredient';
+import styles from './burger-constructor.module.css';
+import cn from 'classnames';
 
-export const BurgerConstructor = () => {
+
+export const BurgerConstructor: FC = () => {
   const bun = useSelector(burgerConstructorSelectors.bun);
-  const ingredients = useSelector(burgerConstructorSelectors.ingredients);
+  const ingredients: IngredientWithUid[] = useSelector(burgerConstructorSelectors.ingredients);
   const sum = useSelector(burgerConstructorSelectors.sum);
   const orderIds = useSelector(burgerConstructorSelectors.orderIds);
-  const { data: orderData, isLoading: isOrderLoading } = useSelector((state) => state.createdOrder);
+  const { data: orderData, isLoading: isOrderLoading } = useSelector((state: AppState) => state.createdOrder);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const isEmpty = !bun && ingredients.length === 0;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [isShowOrderModal, setIsShowOrderModal] = useState(false);
 
@@ -47,11 +49,10 @@ export const BurgerConstructor = () => {
       navigate('/login');
     }
   };
-  const [dropState, drop] = useDrop(() => ({
+  const [dropState, drop] = useDrop<Ingredient>(() => ({
     accept: 'ingredient',
     drop: (item) => {
-
-      if (item.type === 'bun') {
+      if (item.type === IngredientType.BUN) {
         dispatch(burgerConstructorActions.addBun(item));
       } else {
         dispatch(burgerConstructorActions.addIngredient(item));
@@ -60,8 +61,8 @@ export const BurgerConstructor = () => {
   }));
 
   const modalJsx = isShowOrderModal && (
-    <Modal onClose={() => setIsShowOrderModal(false)}>
-      <OrderDetails data={orderData} />
+    <Modal title="" onClose={() => setIsShowOrderModal(false)}>
+      <OrderDetails data={orderData!} />
     </Modal>
   );
 
@@ -74,7 +75,7 @@ export const BurgerConstructor = () => {
     );
   }
 
-  const onDelete = (data) => {
+  const onDelete = (data: Ingredient) => {
     dispatch(burgerConstructorActions.removeIngredient(data));
   };
 
@@ -111,7 +112,7 @@ export const BurgerConstructor = () => {
           size='large'
           onClick={handleOrderClick}
           disabled={bun == null}
-          extraClass={classNames({ [styles.loading]: isOrderLoading } )}
+          extraClass={cn({ [styles.loading]: isOrderLoading } )}
         >
           {isOrderLoading ? 'Загрузка...' : 'Оформить заказ' }
         </Button>

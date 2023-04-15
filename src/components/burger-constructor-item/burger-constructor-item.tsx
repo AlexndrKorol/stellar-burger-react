@@ -1,41 +1,29 @@
-// @ts-nocheck
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { burgerConstructorActions } from '../../services/reducers/burger-constructor';
-import ingredientPropTypes from '../../utils/prop-types';
 import styles from './burger-constructor-item.module.css';
 import cn from 'classnames';
 import { FC } from 'react'
+import { Ingredient } from '../../types/ingredient';
 
-interface IBurgerConctructor {
-  data: {
-    name: string;
-    price: number;
-    image: string;
-    __v: number;
-    _id: string;
-  },
+interface IBurgerConstructor {
+  data: Ingredient
   lastBun?: boolean;
-  onDelete?: (data: typeof ingredientPropTypes) => void;
+  onDelete: (data: Ingredient) => void;
 }
 
-interface IDragItem {
-  type: 'ingredient-list';
-  // item: typeof ;
-}
-
-export const BurgerConstructorItem: FC<IBurgerConctructor> = ({ data, lastBun, onDelete }) => {
+export const BurgerConstructorItem: FC<IBurgerConstructor> = ({ data, lastBun, onDelete }) => {
   const dispatch = useDispatch();
 
-  const [dragState, drag] = useDrag<IDragItem>({
+  const [dragState, drag] = useDrag({
     type: 'ingredient-list',
     item: data,
   });
-  const [dropState, drop] = useDrop<IDragItem>(() => ({
+  const [dropState, drop] = useDrop<Ingredient>(() => ({
     accept: 'ingredient-list',
     item: data,
-    drop: (item, ...args) => {
+    drop: (item) => {
       dispatch(burgerConstructorActions.reorder({ from: item, to: data }));
     },
   }));
