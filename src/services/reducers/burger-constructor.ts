@@ -1,19 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import { Ingredient, IngredientWithUid } from '../../types/ingredient';
+import { AppState } from '../store';
 
-const getInitialState = () => ({
-  bun: null,
-  ingredients: [],
-});
+type State = {
+  bun: Ingredient | null;
+  ingredients: IngredientWithUid[];
+}
 
 export const slice = createSlice({
   name: 'burgerConstructor',
-  initialState: getInitialState(),
+  initialState: {
+    bun: null,
+    ingredients: [],
+  } as State,
   reducers: {
-    addBun: (state, action) => {
+    addBun: (state, action: PayloadAction<Ingredient>) => {
       state.bun = action.payload;
     },
-    addIngredient: (state, action) => {
+    addIngredient: (state, action: PayloadAction<Ingredient>) => {
       const ingredient = {
         ...action.payload,
         uniqueId: uuidv4(),
@@ -21,7 +26,7 @@ export const slice = createSlice({
 
       state.ingredients = [...state.ingredients, ingredient];
     },
-    removeIngredient: (state, action) => {
+    removeIngredient: (state, action: PayloadAction<IngredientWithUid>) => {
       state.ingredients = state.ingredients.filter((ingredient) => {
         return ingredient.uniqueId !== action.payload.uniqueId;
       });
@@ -30,8 +35,8 @@ export const slice = createSlice({
       state.bun = null;
       state.ingredients = [];
     },
-    reorder: (state, { payload }) => {
-      const getIndexByUniqueId = (uniqueId) =>
+    reorder: (state, { payload }: PayloadAction<{ from: IngredientWithUid, to: IngredientWithUid }>) => {
+      const getIndexByUniqueId = (uniqueId: string) =>
         state.ingredients.findIndex((ingredient) => ingredient.uniqueId === uniqueId);
 
       const fromIndex = getIndexByUniqueId(payload.from.uniqueId);
@@ -44,9 +49,9 @@ export const slice = createSlice({
 });
 
 export const burgerConstructorSelectors = {
-  bun: (state) => state.burgerConstructor.bun,
-  ingredients: (state) => state.burgerConstructor.ingredients,
-  sum: ({ burgerConstructor }) => {
+  bun: (state: AppState) => state.burgerConstructor.bun,
+  ingredients: (state: AppState) => state.burgerConstructor.ingredients,
+  sum: ({ burgerConstructor }: AppState) => {
     const { ingredients, bun } = burgerConstructor;
 
     const ingredientsSum = ingredients.reduce((acc, ingredient) => {
@@ -57,7 +62,7 @@ export const burgerConstructorSelectors = {
 
     return ingredientsSum + bunsSum;
   },
-  orderIds: ({ burgerConstructor }) => {
+  orderIds: ({ burgerConstructor }: AppState) => {
     const ids = [];
     const { bun, ingredients } = burgerConstructor;
 

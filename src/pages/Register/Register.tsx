@@ -3,27 +3,25 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { authRegister } from "../../services/reducers/auth";
-import { useDispatch } from "react-redux";
 import { useLoggedIn } from "../../hooks/logged-in";
 import styles from "./Register.module.css";
-import { IFormProps } from "../../types/form";
-import { AppState, AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../services/store";
 
-export const RegisterPage = () => {
+export const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const [formValue, setFormValue] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const[showPassword, setShowPassword] = useState(false);
 
   useLoggedIn();
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -36,12 +34,12 @@ export const RegisterPage = () => {
     }
   };
 
-  const onChange = (event) => {
-    const name = event.target.name;
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
 
     setFormValue({
       ...formValue,
-      [name]: event.target.value,
+      [target.name]: target.value,
     });
   };
 
@@ -54,14 +52,14 @@ export const RegisterPage = () => {
           type="text"
           name="name"
           value={formValue.name}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Input
           placeholder="E-mail"
           type="email"
           name="email"
           value={formValue.email}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Input
           placeholder="Пароль"
@@ -70,7 +68,7 @@ export const RegisterPage = () => {
           onIconClick={() => setShowPassword(!showPassword)}
           name="password"
           value={formValue.password}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Button htmlType="submit" type="primary" size="large">
           Зарегистрироваться

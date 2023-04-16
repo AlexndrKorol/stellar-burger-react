@@ -1,15 +1,15 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useAuth } from "../../hooks/auth";
 import { Navigate, useLocation } from "react-router-dom";
 import { authActions } from '../../services/reducers/auth'
 import { useAppDispatch } from '../../services/store';
 
 
-type TProtectedRouteElement = {
-  element: ReactElement
+type ProtectedRouteProps = {
+  element: JSX.Element
 }
 
-export const ProtectedRouteElement: FC<TProtectedRouteElement> = ({ element }) => {
+export const ProtectedRouteElement: FC<ProtectedRouteProps> = ({ element }) => {
   const { user, isFinished } = useAuth();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();

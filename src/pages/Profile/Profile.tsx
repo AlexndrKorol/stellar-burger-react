@@ -14,7 +14,7 @@ import cn from "classnames";
 export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
+  const user: any = useSelector((state: AppState) => state.auth.user); // TODO
   const [formValue, setFormValue] = useState<IFormProps>({
     name: "",
     email: "",
@@ -24,15 +24,15 @@ export const ProfilePage: FC = () => {
 
   useEffect(() => {
     if (user) {
-      setFormValue({
+      setFormValue((formValue) => ({
         ...formValue,
         name: user.name,
         email: user.email,
-      });
+      }));
     }
   }, [user, setFormValue]);
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -45,10 +45,10 @@ export const ProfilePage: FC = () => {
     }
   };
 
-  const onCancel = async (event) => {
+  const onCancel = async () => {
     setIsButtonDissabled(true);
     try {
-      const res = await dispatch(authUser(formValue)).unwrap();
+      const res = await dispatch(authUser()).unwrap();
       if (res.success) {
         navigate("/profile");
       }
@@ -68,12 +68,12 @@ export const ProfilePage: FC = () => {
     }
   };
 
-  const onChange = (event) => {
-    const name = event.target.name;
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
 
     setFormValue({
       ...formValue,
-      [name]: event.target.value,
+      [target.name]: target.value,
     });
   };
 
@@ -138,7 +138,7 @@ export const ProfilePage: FC = () => {
           icon={"EditIcon"}
           name="name"
           value={formValue.name}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Input
           placeholder="Логин"
@@ -146,7 +146,7 @@ export const ProfilePage: FC = () => {
           icon={"EditIcon"}
           name="email"
           value={formValue.email}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Input
           placeholder="Пароль"
@@ -154,7 +154,7 @@ export const ProfilePage: FC = () => {
           icon={"EditIcon"}
           name="password"
           value={formValue.password}
-          onInput={onChange}
+          onChange={onChange}
         />
 
         <div className={styles.button_container}>
@@ -182,4 +182,4 @@ export const ProfilePage: FC = () => {
       <div className={cn(styles.menu, "ml-15")}></div>
     </div>
   );
-};
+}

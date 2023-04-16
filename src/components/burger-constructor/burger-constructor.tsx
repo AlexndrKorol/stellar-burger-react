@@ -18,7 +18,7 @@ import cn from 'classnames';
 
 export const BurgerConstructor: FC = () => {
   const bun = useSelector(burgerConstructorSelectors.bun);
-  const ingredients: IngredientWithUid[] = useSelector(burgerConstructorSelectors.ingredients);
+  const ingredients = useSelector(burgerConstructorSelectors.ingredients);
   const sum = useSelector(burgerConstructorSelectors.sum);
   const orderIds = useSelector(burgerConstructorSelectors.orderIds);
   const { data: orderData, isLoading: isOrderLoading } = useSelector((state: AppState) => state.createdOrder);
@@ -75,7 +75,7 @@ export const BurgerConstructor: FC = () => {
     );
   }
 
-  const onDelete = (data: Ingredient) => {
+  const onDelete = (data: IngredientWithUid) => {
     dispatch(burgerConstructorActions.removeIngredient(data));
   };
 

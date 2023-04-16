@@ -5,19 +5,19 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLoggedIn } from "../../hooks/logged-in";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/store";
 import { authActions } from "../../services/reducers/auth";
 import styles from "./ForgotPassword.module.css";
 import * as api from "../../utils/api";
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
 
   useLoggedIn();
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -31,6 +31,11 @@ export const ForgotPasswordPage = () => {
     }
   };
 
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const value = (event.target as HTMLInputElement).value;
+    setEmail(value);
+  };
+
   return (
     <div className={styles.root}>
       <form className={styles.form} onSubmit={onSubmit}>
@@ -39,7 +44,7 @@ export const ForgotPasswordPage = () => {
           placeholder="Укажите e-mail"
           type="email"
           value={email}
-          onInput={(e) => setEmail(e.target.value)}
+          onChange={onChange}
         />
         <Button htmlType="submit" type="primary" size="large">
           Восстановить

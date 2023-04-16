@@ -4,34 +4,35 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { authLogin } from "../../services/reducers/auth";
 import { useLoggedIn } from "../../hooks/logged-in";
 import styles from "./Login.module.css";
+import { AppState, useAppDispatch } from '../../services/store';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const returnUrl = useSelector((state) => state.auth.returnUrl);
+  const returnUrl = useSelector((state: AppState) => state.auth.returnUrl);
 
   useLoggedIn();
 
-  const onChange = (event) => {
-    const name = event.target.name;
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
 
     setFormValue({
       ...formValue,
-      [name]: event.target.value,
+      [target.name]: target.value,
     });
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -53,7 +54,7 @@ export const LoginPage = () => {
           type="email"
           name="email"
           value={formValue.email}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Input
           placeholder="Пароль"
@@ -62,7 +63,7 @@ export const LoginPage = () => {
           onIconClick={() => setShowPassword(!showPassword)}
           name="password"
           value={formValue.password}
-          onInput={onChange}
+          onChange={onChange}
         />
         <Button htmlType="submit" type="primary" size="large">
           Войти

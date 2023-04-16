@@ -5,12 +5,12 @@ import { burgerConstructorActions } from '../../services/reducers/burger-constru
 import styles from './burger-constructor-item.module.css';
 import cn from 'classnames';
 import { FC } from 'react'
-import { Ingredient } from '../../types/ingredient';
+import { IngredientWithUid } from '../../types/ingredient';
 
 interface IBurgerConstructor {
-  data: Ingredient
+  data: IngredientWithUid
   lastBun?: boolean;
-  onDelete: (data: Ingredient) => void;
+  onDelete: (data: IngredientWithUid) => void;
 }
 
 export const BurgerConstructorItem: FC<IBurgerConstructor> = ({ data, lastBun, onDelete }) => {
@@ -20,7 +20,7 @@ export const BurgerConstructorItem: FC<IBurgerConstructor> = ({ data, lastBun, o
     type: 'ingredient-list',
     item: data,
   });
-  const [dropState, drop] = useDrop<Ingredient>(() => ({
+  const [dropState, drop] = useDrop<IngredientWithUid>(() => ({
     accept: 'ingredient-list',
     item: data,
     drop: (item) => {

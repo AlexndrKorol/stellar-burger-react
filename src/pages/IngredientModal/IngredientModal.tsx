@@ -1,19 +1,13 @@
+import { FC } from "react";
 import { useParams } from "react-router-dom";
-import { IngredientDetails } from "../../components/ingredient-details/ingredient-details";
 import { Modal } from "../../components/modal/modal";
 import { useIngredients } from "../../hooks/ingredients";
-import { FC } from "react";
-import { TModalProps, TModalPropsId } from "../../types/modal";
+import { IngredientDetails } from "../../components/ingredient-details/ingredient-details";
 
-
-type IdParams = {
-  id: string;
-}
-
-export const IngredientModalPage: FC<TModalProps> = () => {
-  const params = useParams<keyof IdParams>() as IdParams;
+export const IngredientModalPage: FC = () => {
+  const params = useParams();
   const { getById } = useIngredients();
-  const ingredient = getById(params.id); 
+  const ingredient = getById(params.id!); 
 
   if (!ingredient) {
     return null;

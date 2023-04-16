@@ -1,22 +1,13 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-export type TModalProps =  {
-    title: string;
-    onClose: () => void;
-    children: ReactNode
-  }
-
-export type TModalPropsId = TModalProps & {id: string}
-
-export type TModalOverlayProps = {
-onClick: () => void;
+export type ModalProps = {
+  title: string;
+  onClose: () => void;
+  children: ReactNode;
 };
 
-export type TOrderDetails = {
-    data: {
-      name: string;
-      order: {
-        number: string;
-      };
-    };
-  }
+export type ModalPropsId = ModalProps & { id: string };
+
+export type ModalOverlayProps = {
+  onClick: () => void;
+};

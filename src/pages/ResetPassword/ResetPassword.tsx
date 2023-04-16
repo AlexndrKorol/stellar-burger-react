@@ -2,19 +2,20 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLoggedIn } from "../../hooks/logged-in";
 import { useSelector } from "react-redux";
 import styles from "./ResetPassword.module.css";
 import * as api from "../../utils/api";
+import { AppState } from '../../services/store';
 
-export const ResetPasswordPage = () => {
+export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
-  const { restoreOk } = useSelector((state) => state.auth);
-  const[showPassword, setShowPassword] = useState(false);
+  const { restoreOk } = useSelector((state: AppState) => state.auth);
+  const [showPassword, setShowPassword] = useState(false);
 
   useLoggedIn();
 
@@ -22,8 +23,8 @@ export const ResetPasswordPage = () => {
     return <Navigate to="/forgot-password" replace />
   }
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     try {
       const res = await api.resetPassword({ password, token });
@@ -36,6 +37,8 @@ export const ResetPasswordPage = () => {
     }
   };
 
+  const getValue = (event: React.SyntheticEvent) => (event.target as HTMLInputElement).value;
+
   return (
     <div className={styles.root}>
       <form className={styles.form} onSubmit={onSubmit}>
@@ -47,13 +50,13 @@ export const ResetPasswordPage = () => {
           onIconClick={() => setShowPassword(!showPassword)}
           name="password"
           value={password}
-          onInput={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(getValue(e))}
         />
         <Input
           placeholder="Введите код из письма"
           type="text"
           value={token}
-          onInput={(e) => setToken(e.target.value)}
+          onChange={(e) => setToken(getValue(e))}
         />
         <Button htmlType="submit" type="primary" size="large">
           Сохранить

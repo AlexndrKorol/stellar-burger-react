@@ -6,19 +6,19 @@ import styles from './category-item.module.css';
 import { FC } from 'react';
 import { IngredientWithUid } from '../../types/ingredient';
 
-interface Props {
+interface CategoryItemProps {
   data: IngredientWithUid;
   setIngredientWindow: (data: IngredientWithUid) => void;
 }
 
-export const CategoryItem: FC<Props> = ({ data, setIngredientWindow }) => {
+export const CategoryItem: FC<CategoryItemProps> = ({ data, setIngredientWindow }) => {
   const [dragState, drag] = useDrag({
     type: 'ingredient',
     item: data,
   });
 
-  const ingredients: IngredientWithUid[] = useSelector(burgerConstructorSelectors.ingredients);
-  const bun: IngredientWithUid = useSelector(burgerConstructorSelectors.bun);
+  const ingredients = useSelector(burgerConstructorSelectors.ingredients);
+  const bun = useSelector(burgerConstructorSelectors.bun);
 
   const getBunCount = () => bun?._id === data._id ? 2 : 0;
   const getIngredientCount = () => ingredients.filter((ingredient) => ingredient._id === data._id).length;

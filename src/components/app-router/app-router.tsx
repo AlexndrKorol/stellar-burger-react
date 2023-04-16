@@ -10,7 +10,7 @@ import { IngredientsPage } from '../../pages/Ingredients/Ingredients';
 import { NotFoundPage } from '../../pages/NotFound/NotFound';
 import { ProtectedRouteElement } from "../protected-route/protected-route";
 import { IngredientModalPage } from "../../pages/IngredientModal/IngredientModal";
-import { OrdersPage } from "../../pages/Profile/Orders";
+import { OrdersPage } from "../../pages/Orders/Orders";
 import { FeedPage } from "../../pages/Feed/Feed";
 
 export const AppRouter: FC = () => {
@@ -21,7 +21,7 @@ export const AppRouter: FC = () => {
   return (
     <>
       <Routes>
-        { isModal && <Route path="/ingredients/:id"element={
+        { isModal && <Route path="/ingredients/:id" element={
         <>
           <MainPage />
           <IngredientModalPage />

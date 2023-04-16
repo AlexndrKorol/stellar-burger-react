@@ -1,12 +1,18 @@
 import { FC } from 'react';
-import { TOrderDetails } from '../../types/modal';
 import doneImg from '../../images/done.svg';
 import styles from './order-details.module.css';
 import cn from 'classnames';
 
+type OrderProps = {
+  data: {
+    name: string;
+    order: {
+      number: string;
+    };
+  };
+};
 
-
-export const OrderDetails: FC<TOrderDetails> = ({ data }) => {
+export const OrderDetails: FC<OrderProps> = ({ data }) => {
   return (
     <section className={styles.order_details}>
       <h2 className={cn(styles.text, styles.digits, 'mb-8 text text_type_digits-large')}>{data.order.number}</h2>

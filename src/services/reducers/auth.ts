@@ -1,10 +1,14 @@
 import {
   createAsyncThunk,
-  createSlice
+  createSlice,
+  PayloadAction
 } from '@reduxjs/toolkit';
 import { getCookie } from '../../utils/cookie';
 import { AppState } from '../store';
 import * as api from '../../utils/api';
+import { IFormProps } from '../../types/form';
+import { AuthRegisterData, User } from '../../utils/api';
+import { createAppAsyncThunk } from '../thunk';
 
 
 
@@ -30,15 +34,15 @@ export const DATA_KEY = {
   REFRESH_TOKEN: 'refreshToken',
 };
 
-const getInitialState = () => ({
-  user: null,
-  accessToken: getCookie(DATA_KEY.ACCESS_TOKEN),
-  refreshToken: localStorage.getItem(DATA_KEY.REFRESH_TOKEN) || null,
-  returnUrl: '',
-  restoreOk: false,
-});
+type State = {
+  user: User | null;
+  accessToken: string;
+  refreshToken: string;
+  returnUrl: string;
+  restoreOk: boolean;
+}
 
-const setAccessToken = (state, accessToken) => {
+const setAccessToken = (state: State, accessToken: string) => {
   state.accessToken = accessToken;
 
   if (accessToken) {
@@ -49,7 +53,7 @@ const setAccessToken = (state, accessToken) => {
   }
 };
 
-const setRefreshToken = (state, refreshToken) => {
+const setRefreshToken = (state: State, refreshToken: string) => {
   state.refreshToken = refreshToken;
   if (refreshToken) {
     localStorage.setItem(DATA_KEY.REFRESH_TOKEN, refreshToken);
@@ -60,7 +64,13 @@ const setRefreshToken = (state, refreshToken) => {
 
 export const slice = createSlice({
   name: 'auth',
-  initialState: getInitialState(),
+  initialState: {
+    user: null,
+    accessToken: getCookie(DATA_KEY.ACCESS_TOKEN) || '',
+    refreshToken: localStorage.getItem(DATA_KEY.REFRESH_TOKEN) || '',
+    returnUrl: '',
+    restoreOk: false,
+  } as State,
   reducers: {
     setReturnUrl(state, { payload }) {
       state.returnUrl = payload;
@@ -70,9 +80,13 @@ export const slice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    const onRegister = (state, {
-      payload
-    }) => {
+    type RegisterPayload = PayloadAction<{
+      accessToken: string;
+      refreshToken: string;
+      user: User;
+    }>;
+
+    const onRegister = (state: State, { payload }: RegisterPayload) => {
       setAccessToken(state, payload.accessToken);
       setRefreshToken(state, payload.refreshToken);
       state.user = payload.user;
@@ -86,8 +100,8 @@ export const slice = createSlice({
       setAccessToken(state, payload.accessToken);
     });
     builder.addCase(authLogout.fulfilled, (state) => {
-      setAccessToken(state, null);
-      setRefreshToken(state, null);
+      setAccessToken(state, '');
+      setRefreshToken(state, '');
       state.user = null;
     });
     builder.addCase(authUser.fulfilled, (state, { payload }) => {
@@ -102,14 +116,14 @@ export const slice = createSlice({
 });
 
 export const authSelectors = {
-  user: (state) => state.auth.user,
-  accessToken: (state) => state.auth.accessToken,
-  refreshToken: (state) => state.auth.refreshToken,
+  user: (state: AppState) => state.auth.user,
+  accessToken: (state: AppState) => state.auth.accessToken,
+  refreshToken: (state: AppState) => state.auth.refreshToken,
 };
 
 export const authRegister = createAsyncThunk(
   'auth/register',
-   api.authRegister
+  api.authRegister,
 );
 
 export const authLogin = createAsyncThunk(
@@ -117,7 +131,7 @@ export const authLogin = createAsyncThunk(
   api.authLogin
 );
 
-export const authRefresh = createAsyncThunk(
+export const authRefresh = createAppAsyncThunk(
   'auth/refresh',
   async (_, { getState }) => {
     const state = getState();
@@ -126,7 +140,7 @@ export const authRefresh = createAsyncThunk(
   },
 );
 
-export const authLogout = createAsyncThunk(
+export const authLogout = createAppAsyncThunk(
   'auth/logout',
   async (_, {
     getState
@@ -139,7 +153,7 @@ export const authLogout = createAsyncThunk(
   },
 );
 
-export const authUser = createAsyncThunk(
+export const authUser = createAppAsyncThunk(
   'auth/user',
   async (_, { getState }) => {
     const state = getState();
@@ -149,13 +163,13 @@ export const authUser = createAsyncThunk(
   },
 );
 
-export const patchUser = createAsyncThunk(
+export const patchUser = createAppAsyncThunk(
   'auth/profile',
-  async (data, { getState }) => {
+  async (data: IFormProps, { getState }) => {
     const state = getState();
     const accessToken = state.auth.accessToken;
 
-    return await api.patchUser({data, accessToken });
+    return await api.patchUser({ data, accessToken });
   },
 )
 

@@ -10,7 +10,7 @@ export const useIngredients = () => {
 
   useEffect(() => {
     if (!isLoaded) {
-      dispatch(fetchIngredients() as any);
+      dispatch(fetchIngredients() as any); // TODO
     }
   }, [dispatch, isLoaded]);
 
