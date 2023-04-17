@@ -14,7 +14,7 @@ import cn from "classnames";
 export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user: any = useSelector((state: AppState) => state.auth.user); // TODO
+  const user = useSelector((state: AppState) => state.auth.user);
   const [formValue, setFormValue] = useState<IFormProps>({
     name: "",
     email: "",

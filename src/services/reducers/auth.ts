@@ -5,29 +5,10 @@ import {
 } from '@reduxjs/toolkit';
 import { getCookie } from '../../utils/cookie';
 import { AppState } from '../store';
-import * as api from '../../utils/api';
 import { IFormProps } from '../../types/form';
-import { AuthRegisterData, User } from '../../utils/api';
+import { User } from '../../utils/api';
 import { createAppAsyncThunk } from '../thunk';
-
-
-
-// const authInitialState: IAuthState = {
-//   user: null,
-//   accessToken: null,
-//   refreshToken: null,
-//   returnUrl: any,
-//   restoreOk: false,
-// }
-
-// type IAuthState = {
-//   user: any;
-//   accessToken: string | null;
-//   refreshToken: string | null;
-//   returnUrl: string;
-//   restoreOk: boolean;
-// }
-
+import * as api from '../../utils/api';
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',

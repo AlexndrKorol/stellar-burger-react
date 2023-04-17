@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchIngredients } from '../services/reducers/ingredients'
-import { AppState } from '../services/store';
+import { AppState, useAppDispatch } from '../services/store';
 import { IngredientWithUid } from '../types/ingredient';
 
 export const useIngredients = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { data, isLoaded }: { data: IngredientWithUid[], isLoaded: boolean } = useSelector((state: AppState) => state.ingredients);
 
   useEffect(() => {
     if (!isLoaded) {
-      dispatch(fetchIngredients() as any); // TODO
+      dispatch(fetchIngredients()); 
     }
   }, [dispatch, isLoaded]);
 

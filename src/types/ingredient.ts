@@ -20,5 +20,5 @@ export interface IngredientWithUid extends Ingredient {
 export enum IngredientType {
   BUN = 'bun',
   MAIN = 'main',
-  SAUCE = 'sauce'
+  SAUCE = 'sauce',
 }

@@ -1,20 +1,25 @@
 import {
   createSlice,
+  PayloadAction
 } from '@reduxjs/toolkit';
 
-const getInitialState = () => ({ data: null });
+type currentIngredientState = {
+  data: string | null
+}
+
+const getInitialState = (): currentIngredientState => ({ data: null });
 
 export const slice = createSlice({
   name: 'currentIngredient',
   initialState: getInitialState(),
   reducers: {
-    set: (state, action) => {
+    set: (state, action: PayloadAction<string>) => {
       state.data = action.payload;
     },
     unset: (state) => {
       state.data = null;
     },
-    reset: (state, action) => {
+    reset: (state, action: PayloadAction<string>) => {
       state.data = action.payload
     }
   },
