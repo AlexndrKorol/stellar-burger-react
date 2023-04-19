@@ -4,11 +4,11 @@ import cn from 'classnames';
 import { IngredientWithUid } from '../../types/ingredient';
 
 
-interface IIngredientDetails {
+interface IngredientDetailsProp {
   data: IngredientWithUid;
 }
 
-export const IngredientDetails: FC<IIngredientDetails> = ({ data }) => {
+export const IngredientDetails: FC<IngredientDetailsProp> = ({ data }) => {
   const items = [
     {
       label: 'Калории,ккал',
