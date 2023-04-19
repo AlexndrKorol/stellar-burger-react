@@ -31,7 +31,7 @@ export const ForgotPasswordPage = () => {
     }
   };
 
-  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = (event.target as HTMLInputElement).value;
     setEmail(value);
   };

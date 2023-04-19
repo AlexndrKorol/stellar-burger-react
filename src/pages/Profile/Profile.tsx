@@ -3,10 +3,9 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { authLogout, authUser, patchUser } from "../../services/reducers/auth";
 import { FC, useEffect, useState } from "react";
-import { AppState, useAppDispatch } from '../../services/store';
+import { useAppSelector, useAppDispatch } from '../../services/store';
 import { IFormProps } from "../../types/form";
 import styles from "./Profile.module.css";
 import cn from "classnames";
@@ -14,7 +13,7 @@ import cn from "classnames";
 export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: AppState) => state.auth.user);
+  const user = useAppSelector((state) => state.auth.user);
   const [formValue, setFormValue] = useState<IFormProps>({
     name: "",
     email: "",
@@ -68,7 +67,7 @@ export const ProfilePage: FC = () => {
     }
   };
 
-  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
 
     setFormValue({

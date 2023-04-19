@@ -5,16 +5,15 @@ import {
 import React, { FC, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLoggedIn } from "../../hooks/logged-in";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../services/store';
 import styles from "./ResetPassword.module.css";
 import * as api from "../../utils/api";
-import { AppState } from '../../services/store';
 
 export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
-  const { restoreOk } = useSelector((state: AppState) => state.auth);
+  const { restoreOk } = useAppSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
 
   useLoggedIn();

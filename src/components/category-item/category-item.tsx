@@ -1,6 +1,6 @@
 import { useDrag } from 'react-dnd';
 import { BurgerIngredient } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../services/store';
 import { burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
 import styles from './category-item.module.css';
 import { FC } from 'react';
@@ -17,8 +17,8 @@ export const CategoryItem: FC<CategoryItemProps> = ({ data, setIngredientWindow 
     item: data,
   });
 
-  const ingredients = useSelector(burgerConstructorSelectors.ingredients);
-  const bun = useSelector(burgerConstructorSelectors.bun);
+  const ingredients = useAppSelector(burgerConstructorSelectors.ingredients);
+  const bun = useAppSelector(burgerConstructorSelectors.bun);
 
   const getBunCount = () => bun?._id === data._id ? 2 : 0;
   const getIngredientCount = () => ingredients.filter((ingredient) => ingredient._id === data._id).length;

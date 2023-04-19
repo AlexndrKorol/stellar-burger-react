@@ -27,7 +27,7 @@ export const AppRouter: FC = () => {
           <IngredientModalPage />
         </>}  /> }
         <Route path="/" element={<MainPage />} />
-        <Route path="/ingredients/:id"  element={<ProtectedRouteElement element={<IngredientsPage />}  /> } />
+        <Route path="/ingredients/:id" element={<IngredientsPage />} />
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>
 
         <Route path="/login" element={<LoginPage />} />

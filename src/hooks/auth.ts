@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { authUser, authRefresh } from "../services/reducers/auth";
-import { AppState, useAppDispatch } from '../services/store';
+import { useAppDispatch, useAppSelector } from '../services/store';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const { user, refreshToken, accessToken } = useSelector((state: AppState) => state.auth);
+  const { user, refreshToken, accessToken } = useAppSelector((state) => state.auth);
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {

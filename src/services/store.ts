@@ -7,7 +7,7 @@ import burgerConstructorReducer from "./reducers/burger-constructor";
 import currentIngredientReducer from "./reducers/current-ingredient";
 import createdOrderReducer from "./reducers/created-order";
 import authReducer from "./reducers/auth";
-import { useDispatch } from 'react-redux';
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -26,3 +26,5 @@ export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch() as AppDispatch;
+
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector

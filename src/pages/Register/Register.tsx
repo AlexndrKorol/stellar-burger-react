@@ -34,7 +34,7 @@ export const RegisterPage: FC = () => {
     }
   };
 
-  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
 
     setFormValue({
