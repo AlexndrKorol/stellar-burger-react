@@ -14,7 +14,6 @@ import { Ingredient, IngredientType, IngredientWithUid } from '../../types/ingre
 import styles from './burger-constructor.module.css';
 import cn from 'classnames';
 
-
 export const BurgerConstructor: FC = () => {
   const bun = useAppSelector(burgerConstructorSelectors.bun);
   const ingredients = useAppSelector(burgerConstructorSelectors.ingredients);

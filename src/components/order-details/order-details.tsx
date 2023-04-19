@@ -3,7 +3,7 @@ import doneImg from '../../images/done.svg';
 import styles from './order-details.module.css';
 import cn from 'classnames';
 
-type OrderProps = {
+export type OrderProps = {
   data: {
     name: string;
     order: {

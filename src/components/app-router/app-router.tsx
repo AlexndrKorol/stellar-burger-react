@@ -10,7 +10,7 @@ import { IngredientsPage } from '../../pages/Ingredients/Ingredients';
 import { NotFoundPage } from '../../pages/NotFound/NotFound';
 import { ProtectedRouteElement } from "../protected-route/protected-route";
 import { IngredientModalPage } from "../../pages/IngredientModal/IngredientModal";
-import { OrdersPage } from "../../pages/Orders/Orders";
+import { OrdersHistoryPage } from "../../pages/OrdersHistory/OrdersHistory";
 import { FeedPage } from "../../pages/Feed/Feed";
 
 export const AppRouter: FC = () => {
@@ -34,7 +34,7 @@ export const AppRouter: FC = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/profile/orders" element={<OrdersPage />} />
+        <Route path="/profile/orders" element={<OrdersHistoryPage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
