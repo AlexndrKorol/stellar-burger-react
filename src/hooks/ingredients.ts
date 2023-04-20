@@ -5,7 +5,7 @@ import { IngredientWithUid } from '../types/ingredient';
 
 export const useIngredients = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoaded }: { data: IngredientWithUid[], isLoaded: boolean } = useAppSelector((state) => state.ingredients);
+  const { data, isLoaded } = useAppSelector((state) => state.ingredients);
 
   useEffect(() => {
     if (!isLoaded) {

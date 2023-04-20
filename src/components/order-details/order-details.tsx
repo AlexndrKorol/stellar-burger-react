@@ -7,7 +7,7 @@ export type OrderProps = {
   data: {
     name: string;
     order: {
-      number: string;
+      number: number;
     };
   };
 };

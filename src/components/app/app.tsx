@@ -4,10 +4,10 @@ import { AppRouter } from '../app-router/app-router';
 
 export const App: FC = () => {
   return (
-    <div>
+    <>
       <AppHeader />
       <AppRouter />
-    </div>
+    </>
   );
 }
 

@@ -1,16 +1,20 @@
 import { FC }from 'react';
 import styles from './order-feed-element.module.css';
-import cn from 'classnames';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 
-export const OrderFeedElement: FC = () => {
+interface Props {
+    to: string;
+}
+
+export const OrderFeedElement: FC<Props> = ({ to }) => {
     const today  = new Date();
     return (
-    <section className={styles.container}>
+    <Link className={styles.container} to={to}>
         <div className={styles.digits}>
             <p className='text text_type_digits-default'>#034534</p>
             <FormattedDate
-                className={styles.date}
+                className={'text text_type_main-default text_color_inactive'}
                 date={
                     new Date(
                         today.getFullYear(),
@@ -46,7 +50,7 @@ export const OrderFeedElement: FC = () => {
                 <CurrencyIcon type="primary" />
             </div>
         </div>
-    </section>
+    </Link>
     )
 }
 

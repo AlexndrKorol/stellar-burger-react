@@ -9,11 +9,11 @@ export const OrderFeedList: FC = () => {
     <section className={styles.container}>
       <h2 className="text text_type_main-large mb-5">Лента заказов</h2>
       <div className={cn(styles.list, 'custom-scroll')}>
-        <OrderFeedElement />
-        <OrderFeedElement />
-        <OrderFeedElement />
-        <OrderFeedElement />
-        <OrderFeedElement />
+        <OrderFeedElement to={'/feed/034534'} />
+        <OrderFeedElement to={'/feed/034534'} />
+        <OrderFeedElement to={'/feed/034534'} />
+        <OrderFeedElement to={'/feed/034534'} />
+        <OrderFeedElement to={'/feed/034534'} />
       </div>
     </section>
   );

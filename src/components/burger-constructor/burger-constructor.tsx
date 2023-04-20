@@ -47,7 +47,7 @@ export const BurgerConstructor: FC = () => {
       navigate('/login');
     }
   };
-  const [dropState, drop] = useDrop<Ingredient>(() => ({
+  const [, drop] = useDrop<Ingredient>(() => ({
     accept: 'ingredient',
     drop: (item) => {
       if (item.type === IngredientType.BUN) {

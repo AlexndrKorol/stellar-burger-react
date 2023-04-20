@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import styles from './ingredient-details.module.css';
 import cn from 'classnames';
-import { IngredientWithUid } from '../../types/ingredient';
+import { Ingredient } from '../../types/ingredient';
 
 
 interface IngredientDetailsProp {
-  data: IngredientWithUid;
+  data: Ingredient;
 }
 
 export const IngredientDetails: FC<IngredientDetailsProp> = ({ data }) => {

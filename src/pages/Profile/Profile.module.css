@@ -14,28 +14,6 @@
   row-gap: 24px;
 }
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-}
-
-.text_container {
-  width: 320px;
-  height: 64px;
-}
-
-.link {
-  display: flex;
-  color: var(--text-inactive-color);
-  align-items: center;
-  text-decoration: none;
-}
-
-.link_active {
-  color: var(--text-primary-color);
-}
-
 .button {
   padding: 0;
 }

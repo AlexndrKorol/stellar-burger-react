@@ -16,11 +16,11 @@ interface IBurgerConstructor {
 export const BurgerConstructorItem: FC<IBurgerConstructor> = ({ data, lastBun, onDelete }) => {
   const dispatch = useAppDispatch();
 
-  const [dragState, drag] = useDrag({
+  const [, drag] = useDrag({
     type: 'ingredient-list',
     item: data,
   });
-  const [dropState, drop] = useDrop<IngredientWithUid>(() => ({
+  const [, drop] = useDrop<IngredientWithUid>(() => ({
     accept: 'ingredient-list',
     item: data,
     drop: (item) => {

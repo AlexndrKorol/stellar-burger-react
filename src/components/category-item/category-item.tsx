@@ -4,15 +4,15 @@ import { useAppSelector } from '../../services/store';
 import { burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
 import styles from './category-item.module.css';
 import { FC } from 'react';
-import { IngredientWithUid } from '../../types/ingredient';
+import { Ingredient } from '../../types/ingredient';
 
 interface CategoryItemProps {
-  data: IngredientWithUid;
-  setIngredientWindow: (data: IngredientWithUid) => void;
+  data: Ingredient;
+  setIngredientWindow: (data: Ingredient) => void;
 }
 
 export const CategoryItem: FC<CategoryItemProps> = ({ data, setIngredientWindow }) => {
-  const [dragState, drag] = useDrag({
+  const [, drag] = useDrag({
     type: 'ingredient',
     item: data,
   });
