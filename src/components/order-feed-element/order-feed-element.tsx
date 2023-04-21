@@ -2,31 +2,41 @@ import { FC }from 'react';
 import styles from './order-feed-element.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
+import { Order } from '../../types/order';
+import { useIngredients } from '../../hooks/ingredients';
+import { IngredientType } from '../../types/ingredient';
+
 
 interface Props {
     to: string;
+    order: Order;
 }
 
-export const OrderFeedElement: FC<Props> = ({ to }) => {
-    const today  = new Date();
+export const OrderFeedElement: FC<Props> = ({ to, order }) => {
+    const { getById } = useIngredients();
+
+    const orderIngredients = order.ingredients.map((id) => getById(id))
+        .filter(Boolean);
+
+    const sum = orderIngredients.reduce((acc, ingredient) => {
+        if (ingredient.type === IngredientType.BUN) {
+            acc += ingredient.price * 2;
+        } else {
+            acc += ingredient.price;
+        }
+        return acc;
+    }, 0);
+
     return (
     <Link className={styles.container} to={to}>
         <div className={styles.digits}>
-            <p className='text text_type_digits-default'>#034534</p>
+            <p className='text text_type_digits-default'>#{order.number}</p>
             <FormattedDate
                 className={'text text_type_main-default text_color_inactive'}
-                date={
-                    new Date(
-                        today.getFullYear(),
-                        today.getMonth(),
-                        today.getDate(),
-                        today.getHours(),
-                        today.getMinutes() - 1,
-                    )
-                }
+                date={new Date(order.createdAt)}
             />
         </div>
-        <h2 className='text text_type_main-medium'>Death Star Starship Main бургер</h2>
+        <h2 className='text text_type_main-medium'>{ order.name }</h2>
         <div className={styles.compound}>
             <div className={styles.items}>
                 <div className={styles.item__container}>
@@ -46,7 +56,7 @@ export const OrderFeedElement: FC<Props> = ({ to }) => {
                 </div>
             </div>
             <div className={styles.price}>
-                <p className='text text_type_digits-default'>16345</p>
+                <p className='text text_type_digits-default'>{ sum }</p>
                 <CurrencyIcon type="primary" />
             </div>
         </div>

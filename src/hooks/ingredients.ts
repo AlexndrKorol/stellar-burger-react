@@ -15,6 +15,6 @@ export const useIngredients = () => {
 
   return {
     ingredients: data,
-    getById: (id: IngredientWithUid['_id']) => data.find((item) => item._id === id),
+    getById: (id: IngredientWithUid['_id']) => data.find((item) => item._id === id)!,
   };
 };

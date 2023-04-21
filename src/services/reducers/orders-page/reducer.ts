@@ -1,19 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { Order } from '../../../types/order';
 import { wsCloseOrder, wsConnectingOrder, wsErrorOrder, wsMessageOrder, wsOpenOrder } from './action';
-
-type TOrder = {
-    _id: string,
-    ingredients: string[],
-    status: string,
-    name: string,
-    createdAt: Date,
-    updatedAt: Date,
-    number: number
-}
 
 export type TOrderList = {
     success: boolean,
-    orders: TOrder[],
+    orders: Order[],
     total: number,
     totalToday: number
 }

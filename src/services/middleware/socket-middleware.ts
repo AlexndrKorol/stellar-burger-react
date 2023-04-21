@@ -1,97 +1,105 @@
-// import { getCookie } from "../../utils/cookie";
-// import * as api from "../../utils/api";
-// import { ActionCreatorWithOptionalPayload, ActionCreatorWithPayload, ActionCreatorWithoutPayload, Middleware } from '@reduxjs/toolkit';
-// import { TOrderList } from "../reducers/orders-page/reducer";
+import { getCookie } from "../../utils/cookie";
+import * as api from "../../utils/api";
+import {
+  ActionCreatorWithOptionalPayload,
+  ActionCreatorWithPayload,
+  ActionCreatorWithoutPayload,
+  Middleware,
+} from "@reduxjs/toolkit";
+import { TOrderList } from "../reducers/orders-page/reducer";
+import { AppState } from '../store';
 
 export type wsPayloadConnect = {
-    wsUrl: string;
-    withTokenRefresh: boolean
-}
+  wsUrl: string;
+  withTokenRefresh: boolean;
+};
 
-// type TWsActions = {
-//     wsConnect: ActionCreatorWithPayload<wsPayloadConnect>;
-//     wsDisconnect: ActionCreatorWithoutPayload;
-//     wsConnecting: ActionCreatorWithoutPayload;
-//     wsOpen: ActionCreatorWithoutPayload;
-//     wsClose: ActionCreatorWithoutPayload;
-//     wsError: ActionCreatorWithOptionalPayload<string | undefined>;
-//     wsMessage: ActionCreatorWithPayload<TOrderList>;
-// }
+type TWsActions = {
+  wsConnect: ActionCreatorWithPayload<wsPayloadConnect>;
+  wsDisconnect: ActionCreatorWithoutPayload;
+  wsConnecting: ActionCreatorWithoutPayload;
+  wsOpen: ActionCreatorWithoutPayload;
+  wsClose: ActionCreatorWithoutPayload;
+  wsError: ActionCreatorWithOptionalPayload<string | undefined>;
+  wsMessage: ActionCreatorWithPayload<TOrderList>;
+};
 
-// export const socketMiddleware = (wsActions: TWsActions): Middleware => {
-//     return store => {
-//         let socket: WebSocket | null = null;
-//         let reconnectTimer: number = 0;
-//         let isConnected: boolean = false;
-//         let wsUrl: string = '';
-//         let withTokenRefresh: boolean = false;
-//         return next => action => {
-//             const { dispatch } = store;
-//             const { wsConnect, wsDisconnect, wsConnecting, wsOpen, wsClose, wsError, wsMessage } = wsActions;
+export const socketMiddleware = (wsActions: TWsActions): Middleware => {
+  return (store) => {
+    let socket: WebSocket | null = null;
+    let reconnectTimer: number = 0;
+    let isConnected: boolean = false;
+    let wsUrl: string = "";
+    let withTokenRefresh: boolean = false;
 
-//             if (wsConnect.match(action)) {
-//                 wsUrl = action.payload.wsUrl;
-//                 withTokenRefresh = action.payload.withTokenRefresh;
+    return (next) => (action) => {
+      const { dispatch, getState } = store;
+      const state: AppState = getState();
+      const {
+        wsConnect,
+        wsDisconnect,
+        wsConnecting,
+        wsOpen,
+        wsClose,
+        wsError,
+        wsMessage,
+      } = wsActions;
 
-//                 socket = new WebSocket(`${wsUrl}`);
-//                 isConnected = true;
-//                 dispatch(wsConnecting())
-//             }
-//             if (socket) {
-//                 socket.onopen = event => {
-//                     dispatch(wsOpen());
-//                 };
+      if (wsConnect.match(action)) {
+        wsUrl = action.payload.wsUrl;
+        withTokenRefresh = action.payload.withTokenRefresh;
 
-//                 socket.onerror = event => {
-//                     console.log('socket.onerror', event);
-//                 };
+        const clearToken = state.auth.accessToken.replace('Bearer ', '');
 
-//                 socket.onclose = event => {
-//                     if (event.code !== 1000) {
-//                         console.log('socket.onclose error', event);
-//                         dispatch(wsError(event.code.toString()))
-//                     }
+        socket = new WebSocket(`${wsUrl}?token=${clearToken}`);
+        isConnected = true;
+        dispatch(wsConnecting());
+      }
 
-//                     if (isConnected && event.code !== 1000) {
-//                         reconnectTimer = window.setTimeout(() => {
-//                             dispatch(wsConnect({ wsUrl, withTokenRefresh }))
-//                         }, 3000)
-//                     }
-//                 };
+      if (socket) {
+        socket.onopen = (event) => {
+          dispatch(wsOpen());
+        };
 
-//                 socket.onmessage = event => {
-//                     const { data } = event;
-//                     const parsedData = JSON.parse(data);
-//                     if (withTokenRefresh && parsedData.message === 'Invalid or missing token') { //TODO
-//                         // api.authRegister.refreshToken()
-//                         //     .then(refreshData => {
-//                         //         console.log('refreshData', refreshData);
-//                         //         getCookie('refreshToken', refreshData.refreshToken);
-//                         //         getCookie('accessToken', refreshData.accessToken);
-//                         //         const newWsUrl = new URL(wsUrl);
-//                                 // newWsUrl.searchParams.set("token", refreshData.accessToken.replace("Bearer ", ""))  
+        socket.onerror = (event) => {
+          console.log("socket.onerror", event);
+        };
 
+        socket.onclose = (event) => {
+          if (event.code !== 1000) {
+            console.log("socket.onclose error", event);
+            dispatch(wsError(event.code.toString()));
+          }
 
-//                                 dispatch(wsConnect({ wsUrl: newWsUrl.href.toString(), withTokenRefresh }))
-//                             })
-//                             .catch((err) => {
-//                                 dispatch(wsError(err.message.toString()))
-//                             })
-//                     }
-//                     dispatch(wsMessage(parsedData));
-//                 };
-//             }
+          if (isConnected && event.code !== 1000) {
+            reconnectTimer = window.setTimeout(() => {
+              dispatch(
+                wsConnect({
+                  wsUrl,
+                  withTokenRefresh,
+                })
+              );
+            }, 3000);
+          }
+        };
 
-//             if (wsDisconnect.match(action) && socket) {
-//                 clearTimeout(reconnectTimer);
-//                 isConnected = false;
-//                 reconnectTimer = 0;
-//                 socket.close(1000, "Работа закончена")
+        socket.onmessage = (event) => {
+          const { data } = event;
+          const parsedData = JSON.parse(data);
+          dispatch(wsMessage(parsedData));
+        };
+      }
 
-//                 dispatch(wsClose());
-//             }
+      if (wsDisconnect.match(action) && socket) {
+        clearTimeout(reconnectTimer);
+        isConnected = false;
+        reconnectTimer = 0;
+        socket.close(1000, "Работа закончена");
 
-//             next(action);
-//         };
-//     };
-// };
+        dispatch(wsClose());
+      }
+
+      next(action);
+    };
+  };
+};

@@ -1,46 +1,41 @@
-import { createReducer } from '@reduxjs/toolkit'
-import { wsCloseFeed, wsConnectingFeed, wsErrorFeed, wsMessageFeed, wsOpenFeed } from './action';
-
-type TOrder = {
-    _id: string,
-    ingredients: string[],
-    status: string,
-    name: string,
-    createdAt: Date,
-    updatedAt: Date,
-    number: number
-}
+import { createReducer } from "@reduxjs/toolkit";
+import { Order } from "../../../types/order";
+import {
+  wsCloseFeed,
+  wsConnectingFeed,
+  wsErrorFeed,
+  wsMessageFeed,
+  wsOpenFeed,
+} from "./action";
 
 export type TOrderList = {
-    success: boolean,
-    orders: TOrder[],
-    total: number,
-    totalToday: number
-}
+  success: boolean;
+  orders: Order[];
+  total: number;
+  totalToday: number;
+};
 
 type TOrderState = {
-    data: TOrderList | null
-}
+  data: TOrderList | null;
+};
 
 const initialState: TOrderState = {
-    data: null
-}
+  data: null,
+};
 
 export const feedReducer = createReducer(initialState, (builder) => {
-    builder
-        .addCase(wsConnectingFeed, (state) => {
-        })
-        .addCase(wsOpenFeed, (state) => {
-            console.log('OPEN WEBSOCKET');
-        })
-        .addCase(wsCloseFeed, (state) => {
-            console.log('CLOSE WEBSOCKET');
-        })
-        .addCase(wsErrorFeed, (state, action) => {
-        })
-        .addCase(wsMessageFeed, (state, action) => {
-            console.log(action.payload);
+  builder
+    .addCase(wsConnectingFeed, (state) => {})
+    .addCase(wsOpenFeed, (state) => {
+      console.log("OPEN WEBSOCKET");
+    })
+    .addCase(wsCloseFeed, (state) => {
+      console.log("CLOSE WEBSOCKET");
+    })
+    .addCase(wsErrorFeed, (state, action) => {})
+    .addCase(wsMessageFeed, (state, action) => {
+      console.log(action.payload);
 
-            state.data = action.payload
-        })
-})
+      state.data = action.payload;
+    });
+});
