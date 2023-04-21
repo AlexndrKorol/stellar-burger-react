@@ -1,6 +1,6 @@
 import { format, isToday, isYesterday } from 'date-fns';
 
-type dateFormat = {
+type TDateFormat = {
     timezone: 'Moscow',
     hour: 'numeric',
     minute: 'numeric',
@@ -18,7 +18,7 @@ export const dateOfOrder = (date: Date) => {
 }
 
 export const dateFormat = (date: string) => {
-    const settings: dateFormat = {
+    const settings: TDateFormat = {
         timezone: 'Moscow',
         hour: 'numeric',
         minute: 'numeric',

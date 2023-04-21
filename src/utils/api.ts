@@ -1,4 +1,5 @@
 import { Ingredient } from '../types/ingredient';
+import { getCookie } from './cookie';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
@@ -33,8 +34,10 @@ export const createOrder = async (data: CreateOrderData) => {
   return request<CreateOrderResponse>('/orders', {
     method: 'POST',
     body: getBody(data),
+    accessToken: getCookie("accessToken")
   });
 };
+
 
 export type RestorePasswordData = {
   email: string;
@@ -104,6 +107,7 @@ export const authLogin = (data: AuthLoginData) => {
 export type AuthRefreshData = {
   token: string;
 }
+
 export type AuthRefreshResponse = BaseResponse & {
   accessToken: string;
   refreshToken: string;

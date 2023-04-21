@@ -24,7 +24,6 @@ import {
   wsOpenFeed,
 } from "./reducers/feed-page/action";
 import { socketMiddleware } from "./middleware/socket-middleware";
-import { authRegister } from "../utils/api";
 import { feedReducer } from './reducers/feed-page/reducer';
 import { ordersReducer } from './reducers/orders-page/reducer';
 

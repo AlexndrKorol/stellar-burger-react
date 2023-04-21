@@ -67,7 +67,7 @@ export const BurgerConstructor: FC = () => {
   if (isEmpty) {
     return (
       <>
-        <div ref={drop} className={cn(styles.empty, "text text_type_main-medium")}>Добавьте булку и ингредиенты</div>
+        <div ref={drop} className={cn(styles.empty, "text text_type_main-medium")}>Выберите ингредиенты по вкусу<br/>и обязательно добавьте булку!</div>
         { modalJsx }
       </>
     );

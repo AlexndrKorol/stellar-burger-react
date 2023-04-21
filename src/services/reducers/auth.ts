@@ -86,7 +86,6 @@ export const slice = createSlice({
     });
     builder.addCase(authUser.fulfilled, (state, { payload }) => {
       state.user = payload.user;
-
     });
   
     builder.addCase(patchUser.fulfilled, (state, { payload }) => {
