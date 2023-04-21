@@ -21,7 +21,7 @@ export const OrderId: FC = () => {
             <p className={cn(styles.status, 'text text_type_main-default mt-3')}>Выполнен</p>
             <h3 className={cn(styles.title, 'text text_type_main-medium mt-15')}>Состав:</h3>
             <ul className={cn(styles.list, 'custom-scroll')}>
-            <li className={styles.item}>
+                <li className={styles.item}>
                     <div className={styles.image_container}>
                         <img className={styles.image} src='https://code.s3.yandex.net/react/code/meat-01.png' alt='' />
                         <p className={cn(styles.text, 'text_type_main-default')}>Очень длинное имя ингредиента написано тут</p>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { authUser, authRefresh } from "../services/reducers/auth";
 import { useAppDispatch, useAppSelector } from '../services/store';
+import { getCookie } from "../utils/cookie";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +10,9 @@ export const useAuth = () => {
 
   useEffect(() => {
     (async () => {
-      if (accessToken) {
+      console.log(document.cookie.indexOf('accessToken='));
+      if (getCookie('accessToken')) { 
+        console.log('access Token true auth');
         try {
           const res = await dispatch(authUser()).unwrap();
           if (res.success) {
@@ -20,15 +23,18 @@ export const useAuth = () => {
         } catch (error) {
           console.error(error);
         }
-      } else if (refreshToken) {
+      } else {
+        console.log('refresh token true auth');
         try {
-          const res = await dispatch(authRefresh()).unwrap();
+          const res = await dispatch(authRefresh()).unwrap(); 
           if (res.success) {
             await dispatch(authUser()).unwrap();
           } else {
+            console.log('error1');
             throw Error(JSON.stringify(res));
           }
         } catch (error) {
+          console.log('error2');
             console.error(error)
         }
       }

@@ -26,9 +26,12 @@ const setAccessToken = (state: authState, accessToken: string) => {
   state.accessToken = accessToken;
 
   if (accessToken) {
+    console.log('access token reducer');
     const minutes20 = new Date(Date.now() + 20 * 60 * 1000).toUTCString();
+    // const minutes20 = new Date(new Date().getTime() + 1 * 60000).toUTCString(); //для проверки куки
     document.cookie = `${DATA_KEY.ACCESS_TOKEN}=${accessToken}; expires=${minutes20}`;
   } else {
+    console.log('access token reducer else');
     document.cookie = `${DATA_KEY.ACCESS_TOKEN}=; max-age=-1`;
   }
 };
@@ -78,6 +81,7 @@ export const slice = createSlice({
       payload
     }) => {
       setAccessToken(state, payload.accessToken);
+      setRefreshToken(state, payload.refreshToken);
     });
     builder.addCase(authLogout.fulfilled, (state) => {
       setAccessToken(state, '');
@@ -113,8 +117,10 @@ export const authLogin = createAppAsyncThunk(
 export const authRefresh = createAppAsyncThunk(
   'auth/refresh',
   async (_, { getState }) => {
+    console.log('authRefresh');
     const state = getState();
     const refreshToken = state.auth.refreshToken;
+    console.log('refreshToken', refreshToken);
     return await api.authRefresh({ token: refreshToken });
   },
 );
