@@ -8,11 +8,13 @@ import { IFormProps } from '../../types/form';
 import { User } from '../../utils/api';
 import { createAppAsyncThunk } from '../thunk';
 import * as api from '../../utils/api';
+import { RequestStatus } from '../../types/etc';
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',
   REFRESH_TOKEN: 'refreshToken',
 };
+
 
 type authState = {
   user: User | null;
@@ -20,6 +22,7 @@ type authState = {
   refreshToken: string;
   returnUrl: string;
   restoreOk: boolean;
+  status: RequestStatus;
 }
 
 const setAccessToken = (state: authState, accessToken: string) => {
@@ -53,6 +56,7 @@ export const slice = createSlice({
     refreshToken: localStorage.getItem(DATA_KEY.REFRESH_TOKEN) || '',
     returnUrl: '',
     restoreOk: false,
+    status: RequestStatus.INITIAL,
   } as authState,
   reducers: {
     setReturnUrl(state, { payload }) {
@@ -87,9 +91,17 @@ export const slice = createSlice({
       setAccessToken(state, '');
       setRefreshToken(state, '');
       state.user = null;
+      state.status = RequestStatus.INITIAL;
+    });
+    builder.addCase(authUser.pending, (state) => {
+      state.status = RequestStatus.PENDING;
     });
     builder.addCase(authUser.fulfilled, (state, { payload }) => {
       state.user = payload.user;
+      state.status = RequestStatus.SUCCESS;
+    });
+    builder.addCase(authUser.rejected, (state) => {
+      state.status = RequestStatus.ERROR;
     });
   
     builder.addCase(patchUser.fulfilled, (state, { payload }) => {

@@ -14,20 +14,37 @@ import { OrdersHistoryPage } from '../../pages/OrdersHistory/OrdersHistory';
 import { FeedPage } from '../../pages/Feed/Feed';
 import { OrderDetailPage } from '../../pages/OrderDetail/OrderDetail';
 import { FeedDetailPage } from '../../pages/FeedDetail/FeedDetail';
+import { FeedModalPage } from '../../pages/FeedModalPage/FeedModalPage';
+import { OrderModalPage } from '../../pages/OrderModalPage/OrderModalPage';
 
 export const AppRouter: FC = () => {
   const { state } = useLocation();
 
-  const isModal = Boolean(state?.ingredientModal);
+  const isIngredientModal = Boolean(state?.ingredientModal);
+  const isFeedModal = Boolean(state?.feedModal);
+  const isOrderModal = Boolean(state?.orderModal);
   
   return (
     <>
       <Routes>
-        { isModal && <Route path="/ingredients/:id" element={
+        { isIngredientModal && <Route path="/ingredients/:id" element={
         <>
           <MainPage />
           <IngredientModalPage />
         </>}  /> }
+        { isFeedModal && <Route path="/feed/:id" element={
+          <>
+            <FeedPage />
+            <FeedModalPage />
+          </>
+        }
+        /> }
+        { isOrderModal && <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={
+          <>
+            <OrdersHistoryPage/>
+            <OrderModalPage />
+          </>
+        } /> } /> }
         <Route path="/" element={<MainPage />} />
         <Route path="/ingredients/:id" element={<IngredientsPage />} />
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>

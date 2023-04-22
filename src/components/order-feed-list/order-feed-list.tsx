@@ -16,6 +16,7 @@ export const OrderFeedList: FC = () => {
           <OrderFeedElement
             key={order._id}
             to={"/feed/" + order.number}
+            linkState={{ feedModal: true }}
             order={order}
           />
         ))}

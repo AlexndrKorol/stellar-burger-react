@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth"
 
 export const useLoggedIn = () => {
-  const { user, isFinished } = useAuth();
+  const { user, isSuccess } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isFinished && user) {
+    if (isSuccess) {
       console.log(' useLoggedIn has user ');
       navigate('/', { replace: true });
     }
-  }, [isFinished, user, navigate]);
+  }, [isSuccess, user, navigate]);
 };

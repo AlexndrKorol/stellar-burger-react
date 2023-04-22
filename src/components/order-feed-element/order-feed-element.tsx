@@ -2,43 +2,29 @@ import { FC } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { Order } from "../../types/order";
-import { useIngredients } from "../../hooks/ingredients";
-import { IngredientType } from "../../types/ingredient";
-import { dateFormat, dateOfOrder } from "../../utils/date";
+import { formatOrderDate } from "../../utils/date";
 import styles from "./order-feed-element.module.css";
+import { useOrderSum } from '../../hooks/order-sum';
+import { useOrderIngredients } from '../../hooks/order-ingredients';
 
 interface FeedElementProps  {
   to: string;
   order: Order;
+  linkState: { feedModal: true } | { orderModal: true }
 }
 
-export const OrderFeedElement: FC<FeedElementProps> = ({ to, order }) => {
-  const { getById } = useIngredients();
+export const OrderFeedElement: FC<FeedElementProps> = ({ to, order, linkState }) => {
+  const sum = useOrderSum(order);
 
-  const orderIngredients = order.ingredients
-    .map((id) => getById(id))
-    .filter(Boolean);
-
-  const sum = orderIngredients.reduce((acc, ingredient) => {
-    if (ingredient.type === IngredientType.BUN) {
-      acc += ingredient.price * 2;
-    } else {
-      acc += ingredient.price;
-    }
-    return acc;
-  }, 0);
-
-  const orderIngredientsImage = orderIngredients;
-
-  const CurrentDate = dateOfOrder(new Date(order.createdAt));
-  const dateFormatCurrent = order.createdAt.toString();
+  const orderIngredientsImage = useOrderIngredients(order);
+  const orderDate = formatOrderDate(order.createdAt);
 
   return (
-    <Link className={styles.container} to={to}>
+    <Link className={styles.container} to={to} state={linkState}>
       <div className={styles.digits}>
         <p className="text text_type_digits-default">#{order.number}</p>
         <p className={"text text_type_main-default text_color_inactive"}
-        >{`${CurrentDate}, ${dateFormat(dateFormatCurrent)}`}</p>
+        >{orderDate}</p>
       </div>
       <h2 className="text text_type_main-medium">{order.name}</h2>
       <div className={styles.compound}>

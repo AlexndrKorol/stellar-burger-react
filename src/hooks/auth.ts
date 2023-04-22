@@ -1,31 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { authUser, authRefresh } from "../services/reducers/auth";
 import { useAppDispatch, useAppSelector } from '../services/store';
-import { getCookie } from "../utils/cookie";
+import { RequestStatus } from '../types/etc';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const { user, refreshToken, accessToken } = useAppSelector((state) => state.auth);
-  const [isFinished, setIsFinished] = useState(false);
+  const { user, refreshToken, accessToken, status } = useAppSelector((state) => state.auth);
+  const isInitial = status === RequestStatus.INITIAL;
+  const isPending = status === RequestStatus.PENDING;
+  const isSuccess = status === RequestStatus.SUCCESS;
+  const isError = status === RequestStatus.ERROR;
 
   useEffect(() => {
     (async () => {
-      console.log(document.cookie.indexOf('accessToken'));
-      if (getCookie('accessToken')) { 
-        console.log('access Token true auth');
-        try {
-          const res = await dispatch(authUser()).unwrap();
-          if (res.success) {
+      if (isPending || isSuccess) {
+        return;
+      }
 
-          } else {
-            throw Error(JSON.stringify(res));
-          }
-        } catch (error) {
-          console.error(error);
+      try {
+        if (!accessToken) {
+          throw Error('No access token');
         }
-      } else {
-        console.log('refresh token true auth');
+        const res = await dispatch(authUser()).unwrap();
+        if (res.success) {
+
+        } else {
+          throw Error(JSON.stringify(res));
+        }
+      } catch (error) {
         try {
+          if (!refreshToken) {
+            throw Error('No refresh token');
+          }
           const res = await dispatch(authRefresh()).unwrap(); 
           if (res.success) {
             await dispatch(authUser()).unwrap();
@@ -35,18 +41,18 @@ export const useAuth = () => {
           }
         } catch (error) {
           console.log('error2');
-            console.error(error)
+          console.error(error)
         }
       }
-
-      setIsFinished(true);
     })();
-
-  }, [accessToken, refreshToken, dispatch]);
+  }, []);
 
 
   return {
     user,
-    isFinished,
+    isInitial,
+    isPending,
+    isSuccess,
+    isError,
   }
 };

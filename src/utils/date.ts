@@ -27,3 +27,10 @@ export const dateFormat = (date: string) => {
 
     return new Date(Date.parse(date)).toLocaleString("ru", settings)
 }
+
+
+export const formatOrderDate = (date: string): string => {
+    const CurrentDate = dateOfOrder(new Date(date));
+
+    return `${CurrentDate}, ${dateFormat(date)}`;
+};
