@@ -10,7 +10,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(document.cookie.indexOf('accessToken='));
+      console.log(document.cookie.indexOf('accessToken'));
       if (getCookie('accessToken')) { 
         console.log('access Token true auth');
         try {

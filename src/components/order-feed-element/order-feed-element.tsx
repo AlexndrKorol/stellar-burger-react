@@ -7,12 +7,12 @@ import { IngredientType } from "../../types/ingredient";
 import { dateFormat, dateOfOrder } from "../../utils/date";
 import styles from "./order-feed-element.module.css";
 
-interface Props {
+interface FeedElementProps  {
   to: string;
   order: Order;
 }
 
-export const OrderFeedElement: FC<Props> = ({ to, order }) => {
+export const OrderFeedElement: FC<FeedElementProps> = ({ to, order }) => {
   const { getById } = useIngredients();
 
   const orderIngredients = order.ingredients
@@ -37,15 +37,14 @@ export const OrderFeedElement: FC<Props> = ({ to, order }) => {
     <Link className={styles.container} to={to}>
       <div className={styles.digits}>
         <p className="text text_type_digits-default">#{order.number}</p>
-        <p
-          className={"text text_type_main-default text_color_inactive"}
+        <p className={"text text_type_main-default text_color_inactive"}
         >{`${CurrentDate}, ${dateFormat(dateFormatCurrent)}`}</p>
       </div>
       <h2 className="text text_type_main-medium">{order.name}</h2>
       <div className={styles.compound}>
         <div className={styles.items}>
           {orderIngredientsImage.map((image, index) => {
-            const key = `${image._id}_${index}`; //key = { image._id } - возникает ошибка в same key
+            const key = `${image._id}_${index}`; //key = { image._id } - без этого возникает ошибка уникальности key ниже
             return (
               <div className={styles.item__container} key={key}>
                 <img

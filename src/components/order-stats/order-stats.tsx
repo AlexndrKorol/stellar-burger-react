@@ -1,7 +1,7 @@
 import { FC } from "react";
+import { useAppSelector } from "../../services/store";
 import styles from "./order-stats.module.css";
 import cn from "classnames";
-import { useAppSelector } from "../../services/store";
 
 export const OrderStats: FC = () => {
   const data = useAppSelector((state) => state.feed.data);
