@@ -1,10 +1,10 @@
+import { FC } from 'react';
 import { useDrag } from 'react-dnd';
 import { BurgerIngredient } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useAppSelector } from '../../services/store';
 import { burgerConstructorSelectors } from '../../services/reducers/burger-constructor';
-import styles from './category-item.module.css';
-import { FC } from 'react';
 import { Ingredient } from '../../types/ingredient';
+import styles from './category-item.module.css';
 
 interface CategoryItemProps {
   data: Ingredient;

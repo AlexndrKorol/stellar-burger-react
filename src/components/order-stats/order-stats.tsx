@@ -1,17 +1,18 @@
-import { FC } from "react";
-import { useAppSelector } from "../../services/store";
-import styles from "./order-stats.module.css";
-import cn from "classnames";
+import { FC } from 'react';
+import { useAppSelector } from '../../services/store';
+import styles from './order-stats.module.css';
+import cn from 'classnames';
+import { OrderStatus } from '../../types/order';
 
 export const OrderStats: FC = () => {
   const data = useAppSelector((state) => state.feed.data);
   const { orders = [], total = 0, totalToday = 0 } = data || {};
 
   const doneOrders = orders
-    .filter((order) => order.status === "done")
+    .filter((order) => order.status === OrderStatus.DONE)
     .slice(0, 36);
   const pendingOrders = orders
-    .filter((order) => order.status === "pending")
+    .filter((order) => order.status === OrderStatus.PENDING)
     .slice(0, 36);
 
   return (

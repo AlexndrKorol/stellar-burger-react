@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { Order } from "../../types/order";
-import { formatOrderDate } from "../../utils/date";
-import styles from "./order-feed-element.module.css";
+import { FC } from 'react';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
+import { Order } from '../../types/order';
+import { formatOrderDate } from '../../utils/date';
 import { useOrderSum } from '../../hooks/order-sum';
 import { useOrderIngredients } from '../../hooks/order-ingredients';
+import styles from './order-feed-element.module.css';
 
 interface FeedElementProps  {
   to: string;
@@ -30,7 +30,7 @@ export const OrderFeedElement: FC<FeedElementProps> = ({ to, order, linkState })
       <div className={styles.compound}>
         <div className={styles.items}>
           {orderIngredientsImage.map((image, index) => {
-            const key = `${image._id}_${index}`; //key = { image._id } - без этого возникает ошибка уникальности key ниже
+            const key = `${image._id}_${index}`; 
             return (
               <div className={styles.item__container} key={key}>
                 <img

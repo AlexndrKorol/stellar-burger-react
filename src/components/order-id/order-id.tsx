@@ -1,12 +1,12 @@
-import { FC } from "react";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { formatOrderDate } from "../../utils/date";
-import { Order } from "../../types/order";
-import styles from "./order-id.module.css";
-import cn from "classnames";
-import { useOrderSum } from "../../hooks/order-sum";
-import { getOrderStatus } from "../../utils/order";
-import { useOrderIngredients, useOrderIngredientsGrouped } from "../../hooks/order-ingredients";
+import { FC } from 'react';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { formatOrderDate } from '../../utils/date';
+import { Order } from '../../types/order';
+import { useOrderSum } from '../../hooks/order-sum';
+import { getOrderStatus } from '../../utils/order';
+import { useOrderIngredientsGrouped } from '../../hooks/order-ingredients';
+import styles from './order-id.module.css';
+import cn from 'classnames';
 
 interface OrderIdProps {
   order: Order;

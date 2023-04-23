@@ -1,22 +1,21 @@
 import {
-  createSlice} from "@reduxjs/toolkit";
+  createSlice} from '@reduxjs/toolkit';
 import { AppState } from '../store';
-import { Ingredient } from "../../types/ingredient";
-import { createAppAsyncThunk } from "../thunk";
+import { Ingredient } from '../../types/ingredient';
+import { createAppAsyncThunk } from '../thunk';
 import * as api from '../../utils/api';
+import { RequestStatus } from '../../utils/request-status';
 
 
 type State = {
   data: Ingredient[];
-  isLoading: boolean;
-  isLoaded: boolean;
+  status: RequestStatus;
   error: string | null;
 }
 
 const initialState: State = {
   data: [],
-  isLoading: false,
-  isLoaded: false,
+  status: RequestStatus.INITIAL,
   error: null,
 };
 
@@ -40,19 +39,17 @@ export const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {
-        state.isLoading = true;
+        state.status = RequestStatus.PENDING;
         state.error = null;
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.data = action.payload;
-        
-        state.isLoading = false;
-        state.isLoaded = true;
+        state.status = RequestStatus.SUCCESS;
         state.error = null;
       })
       .addCase(fetchIngredients.rejected, (state, { payload }) => {
         state.error = payload instanceof Error ? payload.message : 'Неизвестная ошибка';
-        state.isLoading = false;
+        state.status = RequestStatus.ERROR;
       });
   },
 });

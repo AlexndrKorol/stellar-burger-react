@@ -1,9 +1,9 @@
-import { FC } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import styles from "./profile-nav.module.css";
-import cn from "classnames";
-import { authLogout } from "../../services/reducers/auth";
-import { useAppDispatch } from "../../services/store";
+import { FC } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { authLogout } from '../../services/reducers/auth';
+import { useAppDispatch } from '../../services/store';
+import styles from './profile-nav.module.css';
+import cn from 'classnames';
 
 export const ProfileNav: FC = () => {
   const dispatch = useAppDispatch();

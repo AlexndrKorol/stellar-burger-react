@@ -1,12 +1,10 @@
-import { getCookie } from "../../utils/cookie";
-import * as api from "../../utils/api";
 import {
   ActionCreatorWithOptionalPayload,
   ActionCreatorWithPayload,
   ActionCreatorWithoutPayload,
   Middleware,
-} from "@reduxjs/toolkit";
-import { TOrderList } from "../reducers/orders-page/reducer";
+} from '@reduxjs/toolkit';
+import { TOrderList } from '../reducers/orders-page/reducer';
 import { AppState } from '../store';
 
 export type wsPayloadConnect = {
@@ -62,12 +60,11 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
         };
 
         socket.onerror = (event) => {
-          console.log("socket.onerror", event);
+          console.error("socket.onerror", event);
         };
 
         socket.onclose = (event) => {
           if (event.code !== 1000) {
-            console.log("socket.onclose error", event);
             dispatch(wsError(event.code.toString()));
           }
 

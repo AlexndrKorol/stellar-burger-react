@@ -1,15 +1,15 @@
 import {
   Input,
   Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
-import { authUser, patchUser } from "../../services/reducers/auth";
-import { FC, useEffect, useState } from "react";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useNavigate } from 'react-router-dom';
+import { authUser, patchUser } from '../../services/reducers/auth';
+import { FC, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../services/store';
-import { IFormProps } from "../../types/form";
+import { IFormProps } from '../../types/form';
 import { ProfileNav } from '../../components/profile-nav/profile-nav';
-import styles from "./Profile.module.css";
-import cn from "classnames";
+import styles from './Profile.module.css';
+import cn from 'classnames';
 
 export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();

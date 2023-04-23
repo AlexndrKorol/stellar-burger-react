@@ -30,8 +30,7 @@ export type CreateOrderResponse = BaseResponse & {
   };
 }
 
-export const createOrder = async (data: CreateOrderData) => {
-  console.log('Пошел вызов в api.ts - const createdOrder')
+export const createOrder = (data: CreateOrderData) => {
   return request<CreateOrderResponse>('/orders', {
     method: 'POST',
     body: getBody(data),
@@ -173,7 +172,6 @@ export const patchUser = ({ data, accessToken }: PatchUserData) => {
 export type Init = RequestInit & { accessToken?: string };
 
 const request = async <TResponse>(url: string, init: Init = {}) => {
-  console.log('Пошел вызов в api.ts - const request')
   const res = await fetch(BASE_URL + url, {
     ...init,
     headers: {

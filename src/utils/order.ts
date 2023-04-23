@@ -9,3 +9,7 @@ export const getOrderStatus = (order: Order): string => {
 
   return map[order.status];
 }
+
+export const getOrderByNumber = (orders: Order[], number: number): Order | undefined => {
+  return orders.find((order) => order.number === number);
+};

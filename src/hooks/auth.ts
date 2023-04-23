@@ -1,15 +1,12 @@
-import { useEffect } from "react";
-import { authUser, authRefresh } from "../services/reducers/auth";
+import { useEffect } from 'react';
+import { authUser, authRefresh } from '../services/reducers/auth';
 import { useAppDispatch, useAppSelector } from '../services/store';
-import { RequestStatus } from '../types/etc';
+import { getRequestStatus } from '../utils/request-status';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
   const { user, refreshToken, accessToken, status } = useAppSelector((state) => state.auth);
-  const isInitial = status === RequestStatus.INITIAL;
-  const isPending = status === RequestStatus.PENDING;
-  const isSuccess = status === RequestStatus.SUCCESS;
-  const isError = status === RequestStatus.ERROR;
+  const { isInitial, isPending, isError, isSuccess } = getRequestStatus(status);
 
   useEffect(() => {
     (async () => {
@@ -36,16 +33,14 @@ export const useAuth = () => {
           if (res.success) {
             await dispatch(authUser()).unwrap();
           } else {
-            console.log('error1');
             throw Error(JSON.stringify(res));
           }
         } catch (error) {
-          console.log('error2');
           console.error(error)
         }
       }
     })();
-  }, []);
+  }, [accessToken, dispatch, isPending, isSuccess, refreshToken]);
 
 
   return {

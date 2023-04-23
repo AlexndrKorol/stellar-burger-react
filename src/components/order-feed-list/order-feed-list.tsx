@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import styles from "./order-feed-list.module.css";
-import cn from "classnames";
-import { OrderFeedElement } from "../order-feed-element/order-feed-element";
-import { useAppSelector } from "../../services/store";
+import React, { FC } from 'react';
+import { OrderFeedElement } from '../order-feed-element/order-feed-element';
+import { useAppSelector } from '../../services/store';
+import styles from './order-feed-list.module.css';
+import cn from 'classnames';
 
 export const OrderFeedList: FC = () => {
   const data = useAppSelector((state) => state.feed.data);

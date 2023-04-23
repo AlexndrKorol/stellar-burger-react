@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { useParams } from "react-router-dom";
-import { Modal } from "../../components/modal/modal";
+import { FC } from 'react';
+import { useParams } from 'react-router-dom';
+import { Modal } from '../../components/modal/modal';
 import { useAppSelector } from '../../services/store';
 import OrderId from '../../components/order-id/order-id';
 
@@ -9,7 +9,6 @@ export const FeedModalPage: FC = () => {
   const orders = useAppSelector((state) => state.feed.data?.orders);
   const id = parseInt(params.id || '');
   const order = orders?.find((order) => order.number === id);
-  console.log({ order, params, orders });
 
   if (!order) {
     return null;

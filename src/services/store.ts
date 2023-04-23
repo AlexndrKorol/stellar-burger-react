@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import ingredientsReducer from "./reducers/ingredients";
-import burgerConstructorReducer from "./reducers/burger-constructor";
-import currentIngredientReducer from "./reducers/current-ingredient";
-import createdOrderReducer from "./reducers/created-order";
-import authReducer from "./reducers/auth";
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
+import { configureStore } from '@reduxjs/toolkit';
+import ingredientsReducer from './reducers/ingredients';
+import burgerConstructorReducer from './reducers/burger-constructor';
+import currentIngredientReducer from './reducers/current-ingredient';
+import createdOrderReducer from './reducers/created-order';
+import authReducer from './reducers/auth';
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 import {
   wsConnectOrder,
   wsConnectingOrder,
@@ -13,7 +13,7 @@ import {
   wsErrorOrder,
   wsMessageOrder,
   wsOpenOrder,
-} from "./reducers/orders-page/action";
+} from './reducers/orders-page/action';
 import {
   wsConnectFeed,
   wsConnectingFeed,
@@ -22,10 +22,11 @@ import {
   wsErrorFeed,
   wsMessageFeed,
   wsOpenFeed,
-} from "./reducers/feed-page/action";
-import { socketMiddleware } from "./middleware/socket-middleware";
+} from './reducers/feed-page/action';
+import { socketMiddleware } from './middleware/socket-middleware';
 import { feedReducer } from './reducers/feed-page/reducer';
 import { ordersReducer } from './reducers/orders-page/reducer';
+
 
 const wsActionsFeed = {
   wsConnect: wsConnectFeed,

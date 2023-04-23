@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import * as api from '../../utils/api';
 import { createAppAsyncThunk } from '../thunk';
 import { OrderProps } from '../../components/order-details/order-details';
+import * as api from '../../utils/api';
 
 type State = {
   data: OrderProps['data'] | null;

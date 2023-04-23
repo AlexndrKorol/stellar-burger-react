@@ -1,11 +1,11 @@
+import { FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../services/store';
 import { burgerConstructorActions } from '../../services/reducers/burger-constructor';
+import { IngredientWithUid } from '../../types/ingredient';
 import styles from './burger-constructor-item.module.css';
 import cn from 'classnames';
-import { FC } from 'react'
-import { IngredientWithUid } from '../../types/ingredient';
 
 interface IBurgerConstructor {
   data: IngredientWithUid

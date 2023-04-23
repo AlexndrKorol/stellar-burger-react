@@ -1,12 +1,12 @@
 import {
   Input,
   Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { authLogin } from "../../services/reducers/auth";
-import { useLoggedIn } from "../../hooks/logged-in";
-import styles from "./Login.module.css";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { authLogin } from '../../services/reducers/auth';
+import { useLoggedIn } from '../../hooks/logged-in';
+import styles from './Login.module.css';
 import { useAppSelector, useAppDispatch } from '../../services/store';
 
 export const LoginPage = () => {

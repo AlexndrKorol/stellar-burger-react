@@ -1,8 +1,7 @@
 import { FC } from 'react';
+import { Ingredient } from '../../types/ingredient';
 import styles from './ingredient-details.module.css';
 import cn from 'classnames';
-import { Ingredient } from '../../types/ingredient';
-
 
 interface IngredientDetailsProp {
   data: Ingredient;

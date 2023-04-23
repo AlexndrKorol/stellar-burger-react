@@ -1,17 +1,8 @@
-import { useEffect } from "react";
-import { fetchIngredients } from '../services/reducers/ingredients'
-import { useAppDispatch, useAppSelector } from '../services/store';
+import { useAppSelector } from '../services/store';
 import { IngredientWithUid } from '../types/ingredient';
 
 export const useIngredients = () => {
-  const dispatch = useAppDispatch();
-  const { data, isLoaded } = useAppSelector((state) => state.ingredients);
-
-  useEffect(() => {
-    if (!isLoaded) {
-      dispatch(fetchIngredients()); 
-    }
-  }, [dispatch, isLoaded]);
+  const { data } = useAppSelector((state) => state.ingredients);
 
   return {
     ingredients: data,

@@ -1,6 +1,6 @@
-import { FC, useEffect } from "react";
-import { useAuth } from "../../hooks/auth";
-import { Navigate, useLocation } from "react-router-dom";
+import { FC, useEffect } from 'react';
+import { useAuth } from '../../hooks/auth';
+import { Navigate, useLocation } from 'react-router-dom';
 import { authActions } from '../../services/reducers/auth'
 import { useAppDispatch } from '../../services/store';
 

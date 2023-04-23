@@ -1,9 +1,9 @@
+import { FC } from "react";
 import { CategoryItem } from "../category-item/category-item";
+import { useNavigate } from "react-router-dom";
+import { Ingredient, IngredientType } from '../../types/ingredient';
 import styles from "./category.module.css";
 import cn from "classnames";
-import { useNavigate } from "react-router-dom";
-import { FC } from "react";
-import { Ingredient, IngredientType } from '../../types/ingredient';
 
 interface ICategory {
   title: string;

@@ -7,14 +7,13 @@ import { AppState } from '../store';
 import { IFormProps } from '../../types/form';
 import { User } from '../../utils/api';
 import { createAppAsyncThunk } from '../thunk';
+import { RequestStatus } from '../../utils/request-status';
 import * as api from '../../utils/api';
-import { RequestStatus } from '../../types/etc';
 
 export const DATA_KEY = {
   ACCESS_TOKEN: 'accessToken',
   REFRESH_TOKEN: 'refreshToken',
 };
-
 
 type authState = {
   user: User | null;
@@ -29,12 +28,9 @@ const setAccessToken = (state: authState, accessToken: string) => {
   state.accessToken = accessToken;
 
   if (accessToken) {
-    console.log('access token reducer');
     const minutes20 = new Date(Date.now() + 20 * 60 * 1000).toUTCString();
-    // const minutes20 = new Date(new Date().getTime() + 1 * 60000).toUTCString(); //для проверки куки
     document.cookie = `${DATA_KEY.ACCESS_TOKEN}=${accessToken}; expires=${minutes20}`;
   } else {
-    console.log('access token reducer else');
     document.cookie = `${DATA_KEY.ACCESS_TOKEN}=; max-age=-1`;
   }
 };
@@ -129,10 +125,8 @@ export const authLogin = createAppAsyncThunk(
 export const authRefresh = createAppAsyncThunk(
   'auth/refresh',
   async (_, { getState }) => {
-    console.log('authRefresh');
     const state = getState();
     const refreshToken = state.auth.refreshToken;
-    console.log('refreshToken', refreshToken);
     return await api.authRefresh({ token: refreshToken });
   },
 );
