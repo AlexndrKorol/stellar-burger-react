@@ -2,11 +2,10 @@
   "name": "stellar-burger-react",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://AlexndrKorol.github.io/stellar-burger-react",
+  "homepage": "https://AlexndrKorol.github.io/stellar-burger-react",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.13",
@@ -58,7 +57,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/throttle-debounce": "^5.0.0",
-    "gh-pages": "^5.0.0"
+    "cypress": "^12.10.0",
+    "eslint-plugin-cypress": "^2.13.2",
+    "fetch-mock": "^9.11.0",
+    "gh-pages": "^5.0.0",
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.2.0"
   }
 }

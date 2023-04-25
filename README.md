@@ -25,4 +25,4 @@
 * [Ссылка на базовый макет в Figma](https://www.figma.com/file/tLatiSwpQmOsE3nSReMmqN/React_Bootcamp_Проектные-задачи_external_link?node-id=0%3A1)
 
 **GitHub Pages**
-* [Скоро тут будет деплой](https:)
+* [Скоро тут будет деплой](https:https://AlexndrKorol.github.io/stellar-burger-react)
