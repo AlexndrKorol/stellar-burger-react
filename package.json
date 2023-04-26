@@ -36,7 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy-script": "npm run build && scp -r ./build/* alexkorol@158.160.14.4:/home/alexkorol/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [

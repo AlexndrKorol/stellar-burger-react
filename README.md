@@ -30,4 +30,4 @@
 
 **GitHub Pages**
 
-- [Проект еще нахоодится в разработке](https://AlexndrKorol.github.io/stellar-burger-react)
+- [Проект еще находится в разработке](https://AlexndrKorol.github.io/stellar-burger-react)
