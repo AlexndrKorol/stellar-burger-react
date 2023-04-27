@@ -3,7 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-type currentIngredientState = {
+export type currentIngredientState = {
   data: string | null
 }
 
