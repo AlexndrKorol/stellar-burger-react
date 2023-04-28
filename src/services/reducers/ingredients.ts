@@ -7,13 +7,13 @@ import * as api from '../../utils/api';
 import { RequestStatus } from '../../utils/request-status';
 
 
-type State = {
+export type State = {
   data: Ingredient[];
   status: RequestStatus;
   error: string | null;
 }
 
-const initialState: State = {
+export const initialState: State = {
   data: [],
   status: RequestStatus.INITIAL,
   error: null,

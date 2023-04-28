@@ -4,6 +4,8 @@ import {
   authLogout,
   authRefresh,
   authRegister,
+  authUser,
+  patchUser,
   slice,
 } from "./auth";
 
@@ -101,8 +103,8 @@ describe("auth extraReducers", () => {
     });
   });
   it("authRefresh.fulfilled", () => {
-    const accessToken = "saffsdsd";
-    const refreshToken = "ddgsgdsg";
+    const accessToken = "accToken";
+    const refreshToken = "refToken";
     const action = authRefresh.fulfilled(
       {
         accessToken,
@@ -147,4 +149,110 @@ describe("auth extraReducers", () => {
       status: RequestStatus.INITIAL,
     });
   });
-});
+  it("authUser.pending", () => {
+    const action = authUser.pending(
+      "auth/user"
+    );
+
+    const nextState = slice.reducer(
+      {
+        ...slice.getInitialState(),
+        status: RequestStatus.PENDING,
+      },
+      action
+    );
+
+    expect(nextState).toMatchObject({
+      status: RequestStatus.PENDING,
+    });
+  });
+  it("authUser.fullfiled", () => {
+    const action = authUser.fulfilled(
+      {
+        user: {
+          name: "name",
+          email: "email",
+        },
+        success: true,
+      },
+      "auth/user"
+    );
+
+    const nextState = slice.reducer(
+      {
+        ...slice.getInitialState(),
+        accessToken: "",
+        refreshToken: "",
+        status: RequestStatus.SUCCESS,
+        user: {
+          name: "name",
+          email: "email",
+        },
+      },
+      action
+    );
+
+    expect(nextState).toMatchObject({
+      accessToken: "",
+      refreshToken: "",
+      user: {
+        name: "name",
+        email: "email"
+      },
+      status: RequestStatus.SUCCESS,
+    });
+  });
+  it("authUser.rejected", () => {
+    const action = authUser.rejected(
+      {
+        name: 'Error',
+        message: "error",
+      },
+      "auth/user"
+    );
+
+    const nextState = slice.reducer(
+      {
+        ...slice.getInitialState(),
+        status: RequestStatus.ERROR
+      },
+      action
+    );
+    
+    expect(nextState).toEqual({
+      accessToken: "",
+      refreshToken: "",
+      restoreOk: false,
+      returnUrl: "",
+      user: null,
+      status: RequestStatus.ERROR,
+    });
+  });
+  it("authRefresh.rejected", () => {
+    const action = authRefresh.rejected(
+      {
+        name: 'Error',
+        message: "error",
+      },
+      "auth/refresh"
+    );
+
+    const nextState = slice.reducer(
+      {
+        ...slice.getInitialState(),
+        status: RequestStatus.ERROR
+      },
+      action
+    );
+    
+    expect(nextState).toEqual({
+      accessToken: "",
+      refreshToken: "",
+      restoreOk: false,
+      returnUrl: "",
+      user: null,
+      status: RequestStatus.ERROR,
+    });
+  });
+})
+
