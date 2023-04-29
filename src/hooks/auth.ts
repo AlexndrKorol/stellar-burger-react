@@ -33,9 +33,7 @@ export const useAuth = () => {
           } else {
             throw Error(JSON.stringify(res));
           }
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       }
     })();
   }, [accessToken, dispatch, isPending, isSuccess, refreshToken]);

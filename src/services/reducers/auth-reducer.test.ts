@@ -150,9 +150,7 @@ describe("auth extraReducers", () => {
     });
   });
   it("authUser.pending", () => {
-    const action = authUser.pending(
-      "auth/user"
-    );
+    const action = authUser.pending("auth/user");
 
     const nextState = slice.reducer(
       {
@@ -197,7 +195,7 @@ describe("auth extraReducers", () => {
       refreshToken: "",
       user: {
         name: "name",
-        email: "email"
+        email: "email",
       },
       status: RequestStatus.SUCCESS,
     });
@@ -205,7 +203,7 @@ describe("auth extraReducers", () => {
   it("authUser.rejected", () => {
     const action = authUser.rejected(
       {
-        name: 'Error',
+        name: "Error",
         message: "error",
       },
       "auth/user"
@@ -214,11 +212,11 @@ describe("auth extraReducers", () => {
     const nextState = slice.reducer(
       {
         ...slice.getInitialState(),
-        status: RequestStatus.ERROR
+        status: RequestStatus.ERROR,
       },
       action
     );
-    
+
     expect(nextState).toEqual({
       accessToken: "",
       refreshToken: "",
@@ -231,7 +229,7 @@ describe("auth extraReducers", () => {
   it("authRefresh.rejected", () => {
     const action = authRefresh.rejected(
       {
-        name: 'Error',
+        name: "Error",
         message: "error",
       },
       "auth/refresh"
@@ -240,11 +238,11 @@ describe("auth extraReducers", () => {
     const nextState = slice.reducer(
       {
         ...slice.getInitialState(),
-        status: RequestStatus.ERROR
+        status: RequestStatus.ERROR,
       },
       action
     );
-    
+
     expect(nextState).toEqual({
       accessToken: "",
       refreshToken: "",
@@ -254,5 +252,25 @@ describe("auth extraReducers", () => {
       status: RequestStatus.ERROR,
     });
   });
-})
 
+  it("patchUser.fulfilled", () => {
+    const user = { name: "name", email: "email" };
+    const action = patchUser.fulfilled(
+      { user, success: true },
+      "auth/patchUser",
+      { name: "", email: "", password: "" }
+    );
+
+    const nextState = slice.reducer(
+      {
+        ...slice.getInitialState(),
+        user: null,
+      },
+      action
+    );
+
+    expect(nextState).toMatchObject({
+      user,
+    });
+  });
+});

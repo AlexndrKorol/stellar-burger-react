@@ -12,7 +12,7 @@ describe("страница Конструктор", () => {
       cy.get(".burger-ingredient").first().click();
       getModal().contains("Детали ингредиента");
     });
-});
+  });
 
   it("отображение в модальном окне данных ингредиента", () => {
     cy.visit("/");
@@ -65,13 +65,17 @@ describe("страница Конструктор", () => {
     cy.contains("Краторная булка N-200i").click();
     cy.contains("Детали ингредиента").should('be.visible');
     cy.get('#close').click();
+    getModal().first().should('be.empty');
   });
 
   it("закрытие модальных окон при клике на оверлей", () => {
     cy.visit("/");
     cy.contains("Соус Spicy-X").click();
     cy.contains("Детали ингредиента").should('be.visible');
-    cy.get('#overlay').click(-10,-10, {force: true})
+    cy.get('#overlay').click(0, 0, {
+      force: true
+    });
+    getModal().first().should('be.empty');
   });
 
   it("проверка dnd и оформления заказа", () => {
@@ -83,17 +87,25 @@ describe("страница Конструктор", () => {
     cy.get("#container").trigger("drop");
     cy.get('#container').contains('Говяжий метеорит (отбивная)')
     cy.contains('Оформить заказ').click()
-    
+
     cy.get('.input').as("login-form");
     cy.get('@login-form').find('[class^=text]').first().as('email-input');
     cy.get('@login-form').find('[class^=input__icon]').first().click();
     cy.get('@email-input').type('test16@ya.ru');
     cy.get('@login-form').find('[class^=text]').last().as('password-input').type('12345');
     cy.contains('Войти').click();
-    cy.contains("Оформить заказ").click();
-    cy.get('#orderNumber', {timeout: 16500}).should("exist"); 
-      cy.get('#close').click()
-    })
-  });
 
-  
+    cy.intercept("https://norma.nomoreparties.space/api/orders").as(
+      "api.create-order"
+    );
+
+    cy.contains("Оформить заказ").click();
+
+    cy.wait("@api.create-order");
+
+    cy.get('#orderNumber').should("exist");
+    cy.get('#close').click()
+
+    getModal().should('be.empty');
+  })
+});
