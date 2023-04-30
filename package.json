@@ -2,6 +2,7 @@
   "name": "stellar-burger-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://AlexndrKorol.github.io/stellar-burger-react",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
