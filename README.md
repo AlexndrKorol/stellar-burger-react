@@ -30,3 +30,6 @@
 **GitHub Pages**
 
 - [Проект можно посмотреть тут](https://AlexndrKorol.github.io/stellar-burger-react)
+
+**Yandex Cloud**
+- [Основной деплой](https://stellar-burger.nomoredomains.monster/)
