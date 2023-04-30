@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/stellar-burger-react/static/css/main.3b176310.css",
-    "main.js": "/stellar-burger-react/static/js/main.60e5adcb.js",
-    "static/media/404.jpg": "/stellar-burger-react/static/media/404.ca0f3fcfd4b58bf4c8dc.jpg",
-    "static/media/JetBrainsMono-Bold.woff": "/stellar-burger-react/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
-    "static/media/JetBrainsMono-Regular.woff": "/stellar-burger-react/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
-    "static/media/done.svg": "/stellar-burger-react/static/media/done.15b3ef007d803a88156434118c62aa9a.svg",
-    "static/media/JetBrainsMono-Bold.woff2": "/stellar-burger-react/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
-    "static/media/JetBrainsMono-Regular.woff2": "/stellar-burger-react/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
-    "static/media/iceland.woff": "/stellar-burger-react/static/media/iceland.77ad7fc2baffd9305538.woff",
-    "static/media/iceland.woff2": "/stellar-burger-react/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
-    "index.html": "/stellar-burger-react/index.html",
-    "main.3b176310.css.map": "/stellar-burger-react/static/css/main.3b176310.css.map",
-    "main.60e5adcb.js.map": "/stellar-burger-react/static/js/main.60e5adcb.js.map"
+    "main.css": "/static/css/main.97d9818a.css",
+    "main.js": "/static/js/main.602aa28f.js",
+    "static/media/404.jpg": "/static/media/404.ca0f3fcfd4b58bf4c8dc.jpg",
+    "static/media/JetBrainsMono-Bold.woff": "/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/done.svg": "/static/media/done.15b3ef007d803a88156434118c62aa9a.svg",
+    "static/media/JetBrainsMono-Bold.woff2": "/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "index.html": "/index.html",
+    "main.97d9818a.css.map": "/static/css/main.97d9818a.css.map",
+    "main.602aa28f.js.map": "/static/js/main.602aa28f.js.map"
   },
   "entrypoints": [
-    "static/css/main.3b176310.css",
-    "static/js/main.60e5adcb.js"
+    "static/css/main.97d9818a.css",
+    "static/js/main.602aa28f.js"
   ]
 }
