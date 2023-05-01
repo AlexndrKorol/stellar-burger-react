@@ -9,22 +9,34 @@ import {
   slice,
 } from "./auth";
 
+const INITIAL_STATE = {
+  accessToken: "",
+  refreshToken: "",
+  restoreOk: false,
+  returnUrl: "",
+  user: null,
+  status: RequestStatus.INITIAL,
+};
+
+const initialState = slice.getInitialState();
+
 describe("auth reducer", () => {
+  const returnUrl = "/profile";
   it("getInitialState", () => {
     const nextState = slice.reducer(undefined, { type: "" });
 
-    expect(nextState).toEqual(slice.getInitialState());
+    expect(nextState).toEqual(initialState);
   });
 
   it("setReturnUrl", () => {
     const nextState = slice.reducer(
       undefined,
-      slice.actions.setReturnUrl("/profile")
+      slice.actions.setReturnUrl(returnUrl)
     );
 
     expect(nextState).toEqual({
-      ...slice.getInitialState(),
-      returnUrl: "/profile",
+      ...initialState,
+      returnUrl: returnUrl,
     });
   });
 
@@ -32,28 +44,42 @@ describe("auth reducer", () => {
     const nextState = slice.reducer(undefined, slice.actions.setRestoreOk());
 
     expect(nextState).toEqual({
-      ...slice.getInitialState(),
+      ...initialState,
       restoreOk: true,
     });
   });
 });
 
 describe("auth extraReducers", () => {
-  it("authRegister.fulfilled", () => {
-    const accessToken = "saffsdsd";
-    const refreshToken = "ddgsgdsg";
-    const user = {
-      email: "no@email.ru",
-      name: "myname",
+  const user = {
+    name: "myname",
+    email: "no@email.ru",
     };
 
+    const refreshActionData = {
+      accessToken: "accToken",
+      refreshToken: "refToken",
+      success: true,
+      };
+
+    const registerActionData = {
+    ...refreshActionData,
+    user,
+    };
+    
+    const loginActionData = {
+    ...registerActionData,
+    password: "",
+    };
+
+    const error = {
+      name: "Error",
+      message: "error",
+    };
+      
+  it("authRegister.fulfilled", () => {
     const action = authRegister.fulfilled(
-      {
-        accessToken,
-        refreshToken,
-        success: true,
-        user,
-      },
+     registerActionData,
       "auth/register",
       {
         email: "",
@@ -61,214 +87,131 @@ describe("auth extraReducers", () => {
         password: "",
       }
     );
-
-    const nextState = slice.reducer(undefined, action);
-
+    const nextState = slice.reducer(initialState, action);
     expect(nextState).toEqual({
-      ...slice.getInitialState(),
-      accessToken,
-      refreshToken,
-      user,
+      ...initialState,
+      accessToken: registerActionData.accessToken,
+      refreshToken: registerActionData.refreshToken,
+      user: user,
     });
   });
-  it("authLogin.fulfilled", () => {
-    const accessToken = "saffsdsd";
-    const refreshToken = "ddgsgdsg";
-    const user = {
-      email: "no@email.ru",
-      name: "myname",
-    };
 
+  it("authLogin.fulfilled", () => {
     const action = authLogin.fulfilled(
-      {
-        accessToken,
-        refreshToken,
-        success: true,
-        user,
-      },
+      loginActionData,
       "auth/register",
       {
         email: "",
         password: "",
       }
     );
-
-    const nextState = slice.reducer(undefined, action);
-
+    const nextState = slice.reducer(initialState, action);
     expect(nextState).toEqual({
-      ...slice.getInitialState(),
-      accessToken,
-      refreshToken,
-      user,
+      ...initialState,
+      accessToken: loginActionData.accessToken,
+      refreshToken: loginActionData.refreshToken,
+      user: user,
     });
   });
+
   it("authRefresh.fulfilled", () => {
-    const accessToken = "accToken";
-    const refreshToken = "refToken";
     const action = authRefresh.fulfilled(
-      {
-        accessToken,
-        refreshToken,
-        success: true,
-      },
+      refreshActionData,
       "auth/refresh"
     );
-
-    const nextState = slice.reducer(undefined, action);
-
+    const nextState = slice.reducer(initialState, action);
     expect(nextState).toEqual({
-      ...slice.getInitialState(),
-      accessToken,
-      refreshToken,
+      ...initialState,
+      accessToken: refreshActionData.accessToken,
+      refreshToken: refreshActionData.refreshToken,
     });
   });
+
   it("authLogout.fulfilled", () => {
     const action = authLogout.fulfilled(
       { success: true, message: "ok" },
       "auth/logout"
     );
-
+    const state = {
+      ...initialState,
+      ...refreshActionData,
+      user: user,
+      status: RequestStatus.SUCCESS,
+    };
     const nextState = slice.reducer(
-      {
-        ...slice.getInitialState(),
-        accessToken: "prev-access-token",
-        refreshToken: "prev-refresh-token",
-        status: RequestStatus.SUCCESS,
-        user: {
-          name: "name",
-          email: "email",
-        },
-      },
-      action
+      state,
+      action,
     );
-
     expect(nextState).toMatchObject({
-      accessToken: "",
-      refreshToken: "",
-      user: null,
-      status: RequestStatus.INITIAL,
+      ...INITIAL_STATE,
+      success: true,
     });
   });
+
   it("authUser.pending", () => {
     const action = authUser.pending("auth/user");
-
     const nextState = slice.reducer(
-      {
-        ...slice.getInitialState(),
-        status: RequestStatus.PENDING,
-      },
+      { ...INITIAL_STATE, status: RequestStatus.PENDING },
       action
     );
-
-    expect(nextState).toMatchObject({
-      status: RequestStatus.PENDING,
-    });
+    expect(nextState).toMatchObject({ status: RequestStatus.PENDING });
   });
+
   it("authUser.fullfiled", () => {
     const action = authUser.fulfilled(
       {
-        user: {
-          name: "name",
-          email: "email",
-        },
+        user,
         success: true,
       },
       "auth/user"
     );
-
     const nextState = slice.reducer(
-      {
-        ...slice.getInitialState(),
-        accessToken: "",
-        refreshToken: "",
-        status: RequestStatus.SUCCESS,
-        user: {
-          name: "name",
-          email: "email",
-        },
-      },
+      { ...INITIAL_STATE, status: RequestStatus.SUCCESS },
       action
     );
-
-    expect(nextState).toMatchObject({
-      accessToken: "",
-      refreshToken: "",
-      user: {
-        name: "name",
-        email: "email",
-      },
-      status: RequestStatus.SUCCESS,
-    });
+    expect(nextState).toMatchObject({ status: RequestStatus.SUCCESS });
   });
+
   it("authUser.rejected", () => {
     const action = authUser.rejected(
-      {
-        name: "Error",
-        message: "error",
-      },
+      error,
       "auth/user"
     );
-
     const nextState = slice.reducer(
-      {
-        ...slice.getInitialState(),
-        status: RequestStatus.ERROR,
-      },
-      action
-    );
-
-    expect(nextState).toEqual({
-      accessToken: "",
-      refreshToken: "",
-      restoreOk: false,
-      returnUrl: "",
-      user: null,
-      status: RequestStatus.ERROR,
-    });
+          { ...INITIAL_STATE, status: RequestStatus.ERROR },
+          action
+        );
+    expect(nextState).toMatchObject({ status: RequestStatus.ERROR });
   });
+
   it("authRefresh.rejected", () => {
     const action = authRefresh.rejected(
-      {
-        name: "Error",
-        message: "error",
-      },
+      error,
       "auth/refresh"
     );
-
     const nextState = slice.reducer(
       {
-        ...slice.getInitialState(),
+        ...INITIAL_STATE,
         status: RequestStatus.ERROR,
       },
       action
     );
-
-    expect(nextState).toEqual({
-      accessToken: "",
-      refreshToken: "",
-      restoreOk: false,
-      returnUrl: "",
-      user: null,
-      status: RequestStatus.ERROR,
-    });
+    expect(nextState).toMatchObject({ status: RequestStatus.ERROR });
   });
 
   it("patchUser.fulfilled", () => {
-    const user = { name: "name", email: "email" };
-    const action = patchUser.fulfilled(
-      { user, success: true },
-      "auth/patchUser",
-      { name: "", email: "", password: "" }
-    );
-
+    const action = patchUser.fulfilled({ user, success: true }, "auth/patchUser", {
+      name: "",
+      email: "",
+      password: "",
+    });
     const nextState = slice.reducer(
       {
-        ...slice.getInitialState(),
+        ...initialState,
         user: null,
       },
       action
     );
-
     expect(nextState).toMatchObject({
       user,
     });

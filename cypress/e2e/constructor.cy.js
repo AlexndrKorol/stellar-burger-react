@@ -1,10 +1,13 @@
+import { BASE_URL } from "../../src/utils/api"
+
 describe("страница Конструктор", () => {
   const getModal = () => cy.get("#modals");
+  const containsBun = () =>cy.contains("Краторная булка N-200i");
 
   it("открытие модального окна с описанием ингредиента", () => {
     cy.visit("/");
 
-    cy.intercept("https://norma.nomoreparties.space/api/ingredients").as(
+    cy.intercept(`${BASE_URL}/ingredients`).as(
       "api.ingredients"
     );
 
@@ -38,7 +41,7 @@ describe("страница Конструктор", () => {
     };
 
     cy.intercept(
-      "https://norma.nomoreparties.space/api/ingredients",
+      `${BASE_URL}/ingredients`,
       mockIngredients
     ).as("api.ingredients");
 
@@ -62,7 +65,7 @@ describe("страница Конструктор", () => {
 
   it("закрытие модальных окон при клике на кнопку закрытия", () => {
     cy.visit("/");
-    cy.contains("Краторная булка N-200i").click();
+    containsBun().click();
     cy.contains("Детали ингредиента").should('be.visible');
     cy.get('#close').click();
     getModal().first().should('be.empty');
@@ -80,9 +83,9 @@ describe("страница Конструктор", () => {
 
   it("проверка dnd и оформления заказа", () => {
     cy.visit("/");
-    cy.contains("Краторная булка N-200i").trigger("dragstart");
+    containsBun().trigger("dragstart");
     cy.get("#empty").trigger("drop");
-    cy.get('#container').contains("Краторная булка N-200i")
+    cy.get('#container').contains("Краторная булка N-200i");
     cy.contains("Говяжий метеорит (отбивная)").trigger("dragstart");
     cy.get("#container").trigger("drop");
     cy.get('#container').contains('Говяжий метеорит (отбивная)')
@@ -95,7 +98,7 @@ describe("страница Конструктор", () => {
     cy.get('@login-form').find('[class^=text]').last().as('password-input').type('12345');
     cy.contains('Войти').click();
 
-    cy.intercept("https://norma.nomoreparties.space/api/orders").as(
+    cy.intercept(`${BASE_URL}/orders`).as(
       "api.create-order"
     );
 
